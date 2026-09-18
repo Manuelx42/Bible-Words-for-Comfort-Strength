@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Words for Comfort &amp; Strength</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,440;0,9..144,560;1,9..144,440&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f1e7;
+    --bg-soft: #efe7d6;
+    --ink: #2c2620;
+    --ink-soft: #5c5347;
+    --ink-faint: #8a7f6e;
+    --accent: #8a3324;
+    --accent-soft: #b5624e;
+    --gold: #a9852f;
+    --rule: #d8ccb2;
+    --shadow: rgba(44, 38, 32, 0.10);
+    --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+    --font-body: "Crimson Pro", Georgia, "Times New Roman", serif;
+  }
+
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --bg: #171310;
+      --bg-soft: #1f1a15;
+      --ink: #ece4d4;
+      --ink-soft: #c9bda6;
+      --ink-faint: #8f8271;
+      --accent: #d9846c;
+      --accent-soft: #c96a52;
+      --gold: #c9a24a;
+      --rule: #3a3226;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #171310;
+    --bg-soft: #1f1a15;
+    --ink: #ece4d4;
+    --ink-soft: #c9bda6;
+    --ink-faint: #8f8271;
+    --accent: #d9846c;
+    --accent-soft: #c96a52;
+    --gold: #c9a24a;
+    --rule: #3a3226;
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { background: var(--bg); scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  ::-webkit-scrollbar { width: 12px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--rule);
+    border-radius: 8px;
+    border: 3px solid var(--bg);
+  }
+
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  /* ---------- Floating controls ---------- */
+
+  .controls {
+    position: absolute;
+    top: 1.3rem;
+    right: 1.3rem;
+    z-index: 5;
+    display: flex;
+    gap: 0.4rem;
+    opacity: 0.55;
+    transition: opacity 0.3s ease;
+  }
+
+  .controls:hover, .controls:focus-within {
+    opacity: 1;
+  }
+
+  .pill {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 0.15rem;
+  }
+
+  .pill button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--ink-faint);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .pill button.is-active {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .pill button svg { width: 13px; height: 13px; display: block; }
+  .pill button svg path, .pill button svg circle, .pill button svg line { stroke: currentColor; }
+
+  /* ---------- Hero ---------- */
+
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6.5rem 1.5rem 5rem;
+    text-align: center;
+    background: radial-gradient(ellipse 70% 55% at 50% 0%, var(--bg-soft) 0%, transparent 70%);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 32px;
+    opacity: 0.45;
+  }
+  .scroll-hint svg { width: 100%; height: 100%; display: block; }
+  .scroll-hint path, .scroll-hint line { stroke: var(--ink-faint); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-hint { animation: hint-bob 2.2s ease-in-out infinite; }
+    @keyframes hint-bob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+  }
+
+  .hero__mark { width: 34px; height: 34px; margin: 0 auto 2rem; opacity: 0.85; }
+  .hero__mark svg { width: 100%; height: 100%; display: block; }
+  .hero__mark path, .hero__mark line { stroke: var(--gold); }
+
+  .hero__eyebrow-less {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    color: var(--ink-soft);
+    letter-spacing: 0.01em;
+    margin: 0 0 0.6rem;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 440;
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.1rem;
+    color: var(--ink);
+    max-width: 18ch;
+    margin-inline: auto;
+  }
+
+  h1 em { font-style: italic; font-weight: 440; color: var(--accent); }
+
+  .hero__sub {
+    font-size: clamp(1.02rem, 1.6vw, 1.2rem);
+    color: var(--ink-soft);
+    max-width: 44ch;
+    margin: 0 auto 2.6rem;
+    line-height: 1.6;
+  }
+
+  .hero__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    color: var(--bg);
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.85rem 1.7rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+    box-shadow: 0 6px 18px -8px var(--shadow);
+  }
+
+  .hero__button:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent-soft);
+    transform: translateY(-1px);
+  }
+
+  .hero__button svg { width: 15px; height: 15px; flex: none; }
+  .hero__button svg path { stroke: var(--bg); }
+
+  /* ---------- Table of contents ---------- */
+
+  nav.toc {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4.5rem;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  nav.toc.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .toc__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem 0.7rem;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc__list a {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 0.5rem 1.05rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+    white-space: nowrap;
+  }
+
+  .toc__list a:hover, .toc__list a:focus-visible {
+    border-color: var(--accent-soft);
+    color: var(--accent);
+    background: var(--bg-soft);
+  }
+
+  /* ---------- Sections ---------- */
+
+  main { max-width: 760px; margin: 0 auto; padding: 0 1.5rem 6rem; }
+
+  section.theme { padding-top: 7rem; scroll-margin-top: 1.5rem; }
+  section.theme:first-of-type { padding-top: 0; }
+
+  .theme__divider { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 2.6rem; }
+  .theme__divider::before, .theme__divider::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+  .theme__glyph { width: 9px; height: 9px; border-radius: 50%; background: var(--gold); flex: none; opacity: 0.85; }
+
+  h2.theme__title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.5rem, 3vw, 1.95rem);
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    margin: 0 0 2.4rem;
+    text-align: center;
+  }
+
+  .verses { display: flex; flex-direction: column; gap: 3.6rem; }
+  .verse { position: relative; padding-left: 2.1rem; }
+
+  .verse__quote-mark {
+    position: absolute;
+    left: -0.15rem;
+    top: -0.6rem;
+    font-family: var(--font-display);
+    font-size: 3.1rem;
+    line-height: 1;
+    color: var(--gold);
+    opacity: 0.55;
+    font-weight: 400;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .verse__text {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.18rem, 2vw, 1.38rem);
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0 0 0.7rem;
+    max-width: 62ch;
+  }
+
+  .verse__ref {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.86rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .verse__ref::before { content: ""; display: inline-block; width: 14px; height: 1px; background: var(--accent-soft); opacity: 0.7; }
+
+  .top-link {
+    display: block;
+    text-align: center;
+    margin-top: 5rem;
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-decoration: none;
+  }
+  .top-link:hover, .top-link:focus-visible { color: var(--accent); }
+
+  footer { text-align: center; padding: 3.5rem 1.5rem 4.5rem; color: var(--ink-faint); font-size: 0.88rem; letter-spacing: 0.01em; }
+  footer p { margin: 0.3rem 0; }
+
+  @media (max-width: 560px) {
+    .hero { padding: 4.5rem 1.25rem 3.5rem; }
+    .verse { padding-left: 1.6rem; }
+    .verse__quote-mark { font-size: 2.5rem; left: -0.05rem; }
+    section.theme { padding-top: 4rem; }
+    .controls { top: 0.9rem; right: 0.9rem; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .verse { animation: rise 0.6s ease both; animation-timeline: view(); animation-range: entry 0% cover 25%; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  /* ---------- Random verse overlay ---------- */
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--bg);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+  }
+
+  .overlay.is-open { opacity: 1; visibility: visible; }
+
+  .overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 45%, var(--bg-soft) 0%, transparent 72%);
+    pointer-events: none;
+  }
+
+  .overlay__close {
+    position: absolute;
+    top: 1.8rem;
+    right: 1.8rem;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink-faint);
+    font-family: var(--font-body);
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.25s ease, color 0.25s ease;
+  }
+  .overlay__close:hover, .overlay__close:focus-visible { border-color: var(--accent-soft); color: var(--accent); }
+
+  .overlay__content { position: relative; max-width: 720px; text-align: center; padding: 0 1rem; }
+
+  .overlay__mark { width: 26px; height: 26px; margin: 0 auto 2.2rem; opacity: 0.75; }
+  .overlay__mark svg { width: 100%; height: 100%; display: block; }
+  .overlay__mark path, .overlay__mark line { stroke: var(--gold); }
+
+  #overlayText {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    line-height: 1.42;
+    color: var(--ink);
+    margin: 0 0 1.6rem;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  #overlayText.is-visible { opacity: 1; }
+
+  #overlayRef {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.92rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0;
+    transition: opacity 0.5s ease 0.1s;
+  }
+  #overlayRef.is-visible { opacity: 1; }
+  #overlayRef::before, #overlayRef::after { content: ""; display: inline-block; width: 20px; height: 1px; background: var(--accent-soft); opacity: 0.7; }
+
+  .overlay__actions { margin-top: 3rem; display: flex; justify-content: center; gap: 1rem; }
+
+  .overlay__again {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--rule);
+    padding: 0.75rem 1.6rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+  }
+  .overlay__again:hover, .overlay__again:focus-visible { border-color: var(--accent-soft); color: var(--accent); background: var(--bg-soft); }
+
+  @media (max-width: 560px) {
+    .overlay__close { top: 1.1rem; right: 1.1rem; width: 38px; height: 38px; }
+    #overlayText { font-size: 1.45rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="controls" id="controls">
+    <div class="pill" id="langPill" role="group" aria-label="Language">
+      <button type="button" data-lang="en" class="is-active">EN</button>
+      <button type="button" data-lang="de">DE</button>
+    </div>
+    <div class="pill" id="themePill" role="group" aria-label="Theme">
+      <button type="button" data-theme-choice="light" aria-label="Light mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+      </button>
+      <button type="button" data-theme-choice="dark" aria-label="Dark mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="hero__mark" aria-hidden="true">
+    <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="17" y1="2" x2="17" y2="32" stroke-width="1.2"/>
+      <line x1="4" y1="10" x2="30" y2="10" stroke-width="1.2"/>
+    </svg>
+  </div>
+  <p class="hero__eyebrow-less" data-en="A quiet place to return to" data-de="Ein stiller Ort zum Zurückkehren">A quiet place to return to</p>
+  <h1 data-en-html='Words for <em>Comfort</em> &amp; Strength' data-de-html='Worte für <em>Trost</em> &amp; Kraft'>Words for <em>Comfort</em> &amp; Strength</h1>
+  <p class="hero__sub" data-en="A collection of scripture for the days that ask more of you than you have — to read slowly, and to come back to." data-de="Eine Sammlung von Bibelversen für die Tage, die mehr von dir verlangen, als du hast – zum langsamen Lesen und zum Zurückkommen.">A collection of scripture for the days that ask more of you than you have &mdash; to read slowly, and to come back to.</p>
+  <button class="hero__button" id="randomBtn" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>
+    </svg>
+    <span data-en="Draw a verse for now" data-de="Einen Vers für jetzt ziehen">Draw a verse for now</span>
+  </button>
+  <div class="scroll-hint" aria-hidden="true">
+    <svg viewBox="0 0 20 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="10" y1="0" x2="10" y2="24" stroke-width="1.2"/>
+      <path d="M3 18l7 7 7-7" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Jump to a theme">
+  <ul class="toc__list">
+    <li><a href="#trust-faith" data-en="Trust &amp; Faith" data-de="Vertrauen &amp; Glaube">Trust &amp; Faith</a></li>
+    <li><a href="#strength-courage" data-en="Strength &amp; Courage" data-de="Kraft &amp; Mut">Strength &amp; Courage</a></li>
+    <li><a href="#comfort-healing" data-en="Comfort &amp; Healing" data-de="Trost &amp; Heilung">Comfort &amp; Healing</a></li>
+    <li><a href="#peace-anxiety" data-en="Peace &amp; Anxiety" data-de="Frieden &amp; Angst">Peace &amp; Anxiety</a></li>
+    <li><a href="#hope-renewal" data-en="Hope &amp; Renewal" data-de="Hoffnung &amp; Erneuerung">Hope &amp; Renewal</a></li>
+    <li><a href="#love-reassurance" data-en="Love &amp; Reassurance" data-de="Liebe &amp; Geborgenheit">Love &amp; Reassurance</a></li>
+    <li><a href="#presence-faithfulness" data-en="God&rsquo;s Presence" data-de="Gottes Gegenwart">God&rsquo;s Presence</a></li>
+    <li><a href="#perseverance" data-en="Perseverance" data-de="Ausdauer">Perseverance</a></li>
+    <li><a href="#rest-restoration" data-en="Rest &amp; Restoration" data-de="Ruhe &amp; Wiederherstellung">Rest &amp; Restoration</a></li>
+    <li><a href="#forgiveness-grace" data-en="Forgiveness &amp; Grace" data-de="Vergebung &amp; Gnade">Forgiveness &amp; Grace</a></li>
+    <li><a href="#purpose-calling" data-en="Purpose &amp; Calling" data-de="Bestimmung &amp; Berufung">Purpose &amp; Calling</a></li>
+    <li><a href="#gratitude-joy" data-en="Gratitude &amp; Joy" data-de="Dankbarkeit &amp; Freude">Gratitude &amp; Joy</a></li>
+    <li><a href="#wisdom-guidance" data-en="Wisdom &amp; Guidance" data-de="Weisheit &amp; Führung">Wisdom &amp; Guidance</a></li>
+    <li><a href="#power-of-god" data-en="The Power of God" data-de="Die Kraft Gottes">The Power of God</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <section class="theme" id="trust-faith">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Trust &amp; Faith" data-de="Vertrauen &amp; Glaube">Trust &amp; Faith</h2>
+    <div class="verses">
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Trust in the Lord with all your heart, and do not lean on your own understanding." data-de="Verlaß dich auf den HERRN von ganzem Herzen und verlaß dich nicht auf deinen Verstand.">Trust in the Lord with all your heart, and do not lean on your own understanding.</p>
+        <span class="verse__ref" data-en="Proverbs 3:5–6" data-de="Sprüche 3,5&ndash;6">Proverbs 3:5&ndash;6</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="When I am afraid, I put my trust in you." data-de="Wenn ich mich fürchte, so hoffe ich auf dich.">When I am afraid, I put my trust in you.</p>
+        <span class="verse__ref" data-en="Psalm 56:3" data-de="Psalm 56,4">Psalm 56:3</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Faith is the assurance of things hoped for, the conviction of things not seen." data-de="Es ist aber der Glaube eine gewisse Zuversicht des, das man hofft, und ein Nichtzweifeln an dem, das man nicht sieht.">Faith is the assurance of things hoped for, the conviction of things not seen.</p>
+        <span class="verse__ref" data-en="Hebrews 11:1" data-de="Hebräer 11,1">Hebrews 11:1</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="For we walk by faith, not by sight." data-de="Denn wir wandeln im Glauben, und nicht im Schauen.">For we walk by faith, not by sight.</p>
+        <span class="verse__ref" data-en="2 Corinthians 5:7" data-de="2. Korinther 5,7">2 Corinthians 5:7</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" id="strength-courage">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Strength &amp; Courage" data-de="Kraft &amp; Mut">Strength &amp; Courage</h2>
+    <div class="verses">
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go." data-de="Sei getrost und unverzagt; fürchte dich nicht und lass dich nicht erschrecken, denn der HERR, dein Gott, ist mit dir in allem, was du tun wirst.">Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.</p>
+        <span class="verse__ref" data-en="Joshua 1:9" data-de="Josua 1,9">Joshua 1:9</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you." data-de="So fürchte dich nicht, ich bin mit dir; weiche nicht, denn ich bin dein Gott. Ich stärke dich, ich helfe dir auch.">Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you.</p>
+        <span class="verse__ref" data-en="Isaiah 41:10" data-de="Jesaja 41,10">Isaiah 41:10</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="I can do all things through him who strengthens me." data-de="Ich vermag alles durch den, der mich mächtig macht, Christus.">I can do all things through him who strengthens me.</p>
+        <span class="verse__ref" data-en="Philippians 4:13" data-de="Philipper 4,13">Philippians 4:13</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="My grace is sufficient for you, for my power is made perfect in weakness." data-de="Lass dir an meiner Gnade genügen; denn meine Kraft ist in den Schwachen mächtig.">My grace is sufficient for you, for my power is made perfect in weakness.</p>
+        <span class="verse__ref" data-en="2 Corinthians 12:9" data-de="2. Korinther 12,9">2 Corinthians 12:9</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="He gives power to the faint, and to him who has no might he increases strength." data-de="Er gibt den Müden Kraft, und Stärke genug dem Unvermögenden.">He gives power to the faint, and to him who has no might he increases strength.</p>
+        <span class="verse__ref" data-en="Isaiah 40:29" data-de="Jesaja 40,29">Isaiah 40:29</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="My flesh and my heart may fail, but God is the strength of my heart and my portion forever." data-de="Wenn mir gleich Leib und Seele verschmachtet, so bist du doch, Gott, allezeit meines Herzens Trost und mein Teil.">My flesh and my heart may fail, but God is the strength of my heart and my portion forever.</p>
+        <span class="verse__ref" data-en="Psalm 73:26" data-de="Psalm 73,26">Psalm 73:26</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The joy of the Lord is your strength." data-de="Die Freude am HERRN ist eure Stärke.">The joy of the Lord is your strength.</p>
+        <span class="verse__ref" data-en="Nehemiah 8:10" data-de="Nehemia 8,10">Nehemiah 8:10</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" id="comfort-healing">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Comfort &amp; Healing" data-de="Trost &amp; Heilung">Comfort &amp; Healing</h2>
+    <div class="verses">
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The Lord is near to the brokenhearted and saves the crushed in spirit." data-de="Der HERR ist nahe bei denen, die zerbrochnes Herzens sind, und hilft denen, die ein zerschlagen Gemüt haben.">The Lord is near to the brokenhearted and saves the crushed in spirit.</p>
+        <span class="verse__ref" data-en="Psalm 34:18" data-de="Psalm 34,19">Psalm 34:18</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="He heals the brokenhearted and binds up their wounds." data-de="Er heilt, die zerbrochnes Herzens sind, und verbindet ihre Schmerzen.">He heals the brokenhearted and binds up their wounds.</p>
+        <span class="verse__ref" data-en="Psalm 147:3" data-de="Psalm 147,3">Psalm 147:3</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope." data-de="Denn ich weiß wohl, was ich für Gedanken über euch habe, spricht der HERR: Gedanken des Friedens und nicht des Leides, dass ich euch gebe das Ende, des ihr wartet.">For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope.</p>
+        <span class="verse__ref" data-en="Jeremiah 29:11" data-de="Jeremia 29,11">Jeremiah 29:11</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Come to me, all who labor and are heavy laden, and I will give you rest." data-de="Kommet her zu mir alle, die ihr mühselig und beladen seid; ich will euch erquicken.">Come to me, all who labor and are heavy laden, and I will give you rest.</p>
+        <span class="verse__ref" data-en="Matthew 11:28" data-de="Matthäus 11,28">Matthew 11:28</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The Father of mercies and God of all comfort, who comforts us in all our affliction." data-de="Der Vater der Barmherzigkeit und Gott alles Trostes, der uns tröstet in aller unsrer Trübsal.">The Father of mercies and God of all comfort, who comforts us in all our affliction.</p>
+        <span class="verse__ref" data-en="2 Corinthians 1:3–4" data-de="2. Korinther 1,3&ndash;4">2 Corinthians 1:3&ndash;4</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Weeping may tarry for the night, but joy comes with the morning." data-de="Den Abend lang währt das Weinen, aber des Morgens ist Freude.">Weeping may tarry for the night, but joy comes with the morning.</p>
+        <span class="verse__ref" data-en="Psalm 30:5" data-de="Psalm 30,6">Psalm 30:5</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="He will wipe away every tear from their eyes, and death shall be no more, neither shall there be mourning." data-de="Und Gott wird abwischen alle Tränen von ihren Augen, und der Tod wird nicht mehr sein, noch Leid noch Geschrei noch Schmerz wird mehr sein.">He will wipe away every tear from their eyes, and death shall be no more, neither shall there be mourning.</p>
+        <span class="verse__ref" data-en="Revelation 21:4" data-de="Offenbarung 21,4">Revelation 21:4</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Cast your burden on the Lord, and he will sustain you." data-de="Wirf dein Anliegen auf den HERRN; der wird dich versorgen.">Cast your burden on the Lord, and he will sustain you.</p>
+        <span class="verse__ref" data-en="Psalm 55:22" data-de="Psalm 55,23">Psalm 55:22</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" id="peace-anxiety">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Peace &amp; Anxiety" data-de="Frieden &amp; Angst">Peace &amp; Anxiety</h2>
+    <div class="verses">
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Do not be anxious about anything… and the peace of God, which surpasses all understanding, will guard your hearts and your minds." data-de="Sorget nichts, sondern lasset eure Bitten im Gebet und Flehen mit Danksagung vor Gott kund werden. Und der Friede Gottes, welcher höher ist denn alle Vernunft, bewahre eure Herzen und Sinne.">Do not be anxious about anything&hellip; and the peace of God, which surpasses all understanding, will guard your hearts and your minds.</p>
+        <span class="verse__ref" data-en="Philippians 4:6–7" data-de="Philipper 4,6&ndash;7">Philippians 4:6&ndash;7</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Peace I leave with you; my peace I give to you… Let not your hearts be troubled, neither let them be afraid." data-de="Den Frieden lasse ich euch, meinen Frieden gebe ich euch. Euer Herz erschrecke nicht und fürchte sich nicht.">Peace I leave with you; my peace I give to you&hellip; Let not your hearts be troubled, neither let them be afraid.</p>
+        <span class="verse__ref" data-en="John 14:27" data-de="Johannes 14,27">John 14:27</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="When you pass through the waters, I will be with you; and through the rivers, they shall not overwhelm you." data-de="Wenn du durch Wasser gehst, will ich bei dir sein, dass dich die Ströme nicht sollen ersäufen.">When you pass through the waters, I will be with you; and through the rivers, they shall not overwhelm you.</p>
+        <span class="verse__ref" data-en="Isaiah 43:2" data-de="Jesaja 43,2">Isaiah 43:2</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Do not be anxious about tomorrow, for tomorrow will be anxious for itself." data-de="Darum sorgt nicht für den andern Morgen; denn der morgende Tag wird für das Seine sorgen.">Do not be anxious about tomorrow, for tomorrow will be anxious for itself.</p>
+        <span class="verse__ref" data-en="Matthew 6:34" data-de="Matthäus 6,34">Matthew 6:34</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="There is no fear in love, but perfect love casts out fear." data-de="Furcht ist nicht in der Liebe, sondern die völlige Liebe treibt die Furcht aus.">There is no fear in love, but perfect love casts out fear.</p>
+        <span class="verse__ref" data-en="1 John 4:18" data-de="1. Johannes 4,18">1 John 4:18</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Be strong and courageous… for it is the Lord your God who goes with you. He will not leave you or forsake you." data-de="Seid getrost und unverzagt, denn der HERR, dein Gott, wird selber mit dir wandeln und wird die Hand nicht abtun noch dich verlassen.">Be strong and courageous&hellip; for it is the Lord your God who goes with you. He will not leave you or forsake you.</p>
+        <span class="verse__ref" data-en="Deuteronomy 31:6" data-de="5. Mose 31,6">Deuteronomy 31:6</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" id="hope-renewal">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Hope &amp; Renewal" data-de="Hoffnung &amp; Erneuerung">Hope &amp; Renewal</h2>
+    <div class="verses">
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="They who wait for the Lord shall renew their strength; they shall mount up with wings like eagles." data-de="Die auf den HERRN harren, kriegen neue Kraft, dass sie auffahren mit Flügeln wie Adler.">They who wait for the Lord shall renew their strength; they shall mount up with wings like eagles.</p>
+        <span class="verse__ref" data-en="Isaiah 40:31" data-de="Jesaja 40,31">Isaiah 40:31</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The steadfast love of the Lord never ceases… they are new every morning." data-de="Die Güte des HERRN ist's, dass wir nicht gar aus sind; sie ist alle Morgen neu.">The steadfast love of the Lord never ceases&hellip; they are new every morning.</p>
+        <span class="verse__ref" data-en="Lamentations 3:22–23" data-de="Klagelieder 3,22&ndash;23">Lamentations 3:22&ndash;23</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="And we know that for those who love God all things work together for good." data-de="Wir wissen aber, dass denen, die Gott lieben, alle Dinge zum Besten dienen.">And we know that for those who love God all things work together for good.</p>
+        <span class="verse__ref" data-en="Romans 8:28" data-de="Römer 8,28">Romans 8:28</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="If anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come." data-de="Ist jemand in Christo, so ist er eine neue Kreatur; das Alte ist vergangen, siehe, es ist alles neu geworden.">If anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.</p>
+        <span class="verse__ref" data-en="2 Corinthians 5:17" data-de="2. Korinther 5,17">2 Corinthians 5:17</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Behold, I am doing a new thing; now it springs forth, do you not perceive it?" data-de="Siehe, ich will ein Neues machen, jetzt soll es aufwachsen, und ihr werdet's erfahren.">Behold, I am doing a new thing; now it springs forth, do you not perceive it?</p>
+        <span class="verse__ref" data-en="Isaiah 43:19" data-de="Jesaja 43,19">Isaiah 43:19</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="I will give you a new heart, and a new spirit I will put within you." data-de="Und ich will euch ein neues Herz und einen neuen Geist in euch geben.">I will give you a new heart, and a new spirit I will put within you.</p>
+        <span class="verse__ref" data-en="Ezekiel 36:26" data-de="Hesekiel 36,26">Ezekiel 36:26</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="He who began a good work in you will bring it to completion." data-de="Der in euch angefangen hat das gute Werk, der wird's auch vollführen bis an den Tag Jesu Christi.">He who began a good work in you will bring it to completion.</p>
+        <span class="verse__ref" data-en="Philippians 1:6" data-de="Philipper 1,6">Philippians 1:6</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" id="love-reassurance">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Love &amp; Reassurance" data-de="Liebe &amp; Geborgenheit">Love &amp; Reassurance</h2>
+    <div class="verses">
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The Lord your God is in your midst… he will rejoice over you with gladness." data-de="Der HERR, dein Gott, ist bei dir, ein starker Heiland; er wird sich über dich freuen und dir freundlich sein.">The Lord your God is in your midst&hellip; he will rejoice over you with gladness.</p>
+        <span class="verse__ref" data-en="Zephaniah 3:17" data-de="Zefanja 3,17">Zephaniah 3:17</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me." data-de="Und ob ich schon wanderte im finstern Tal, fürchte ich kein Unglück; denn du bist bei mir.">Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me.</p>
+        <span class="verse__ref" data-en="Psalm 23:4" data-de="Psalm 23,4">Psalm 23:4</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Casting all your anxieties on him, because he cares for you." data-de="Alle Sorge werfet auf ihn; denn er sorgt für euch.">Casting all your anxieties on him, because he cares for you.</p>
+        <span class="verse__ref" data-en="1 Peter 5:7" data-de="1. Petrus 5,7">1 Peter 5:7</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" id="presence-faithfulness">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="God&rsquo;s Presence &amp; Faithfulness" data-de="Gottes Gegenwart &amp; Treue">God&rsquo;s Presence &amp; Faithfulness</h2>
+    <div class="verses">
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="God is our refuge and strength, a very present help in trouble." data-de="Gott ist unsre Zuversicht und Stärke, eine Hilfe in den großen Nöten, die uns getroffen haben.">God is our refuge and strength, a very present help in trouble.</p>
+        <span class="verse__ref" data-en="Psalm 46:1" data-de="Psalm 46,2">Psalm 46:1</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="I lift up my eyes to the hills. From where does my help come? My help comes from the Lord." data-de="Ich hebe meine Augen auf zu den Bergen. Woher kommt mir Hilfe? Meine Hilfe kommt vom HERRN, der Himmel und Erde gemacht hat.">I lift up my eyes to the hills. From where does my help come? My help comes from the Lord.</p>
+        <span class="verse__ref" data-en="Psalm 121:1–2" data-de="Psalm 121,1&ndash;2">Psalm 121:1&ndash;2</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The Lord is good to those who wait for him, to the soul who seeks him." data-de="Der HERR ist freundlich dem, der auf ihn harrt, und der Seele, die nach ihm fragt.">The Lord is good to those who wait for him, to the soul who seeks him.</p>
+        <span class="verse__ref" data-en="Lamentations 3:25" data-de="Klagelieder 3,25">Lamentations 3:25</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The eternal God is your dwelling place, and underneath are the everlasting arms." data-de="Zuflucht ist bei dem alten Gott und unten ewige Arme.">The eternal God is your dwelling place, and underneath are the everlasting arms.</p>
+        <span class="verse__ref" data-en="Deuteronomy 33:27" data-de="5. Mose 33,27">Deuteronomy 33:27</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" id="perseverance">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Perseverance &amp; Endurance" data-de="Ausdauer &amp; Beständigkeit">Perseverance &amp; Endurance</h2>
+    <div class="verses">
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Blessed is the man who remains steadfast under trial, for when he has stood the test he will receive the crown of life." data-de="Selig ist der Mann, der die Anfechtung erduldet; denn nachdem er bewährt ist, wird er die Krone des Lebens empfangen.">Blessed is the man who remains steadfast under trial, for when he has stood the test he will receive the crown of life.</p>
+        <span class="verse__ref" data-en="James 1:12" data-de="Jakobus 1,12">James 1:12</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Let us not grow weary of doing good, for in due season we will reap, if we do not give up." data-de="Lasset uns aber Gutes tun und nicht müde werden; denn zu seiner Zeit werden wir auch ernten, so wir nicht aufhören.">Let us not grow weary of doing good, for in due season we will reap, if we do not give up.</p>
+        <span class="verse__ref" data-en="Galatians 6:9" data-de="Galater 6,9">Galatians 6:9</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Suffering produces endurance, and endurance produces character, and character produces hope." data-de="Trübsal bringt Geduld, Geduld aber bringt Erfahrung, Erfahrung aber bringt Hoffnung.">Suffering produces endurance, and endurance produces character, and character produces hope.</p>
+        <span class="verse__ref" data-en="Romans 5:3–4" data-de="Römer 5,3&ndash;4">Romans 5:3&ndash;4</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" id="rest-restoration">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Rest &amp; Restoration" data-de="Ruhe &amp; Wiederherstellung">Rest &amp; Restoration</h2>
+    <div class="verses">
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The Lord is my shepherd; I shall not want… he restores my soul." data-de="Der HERR ist mein Hirte; mir wird nichts mangeln. Er erquicket meine Seele.">The Lord is my shepherd; I shall not want&hellip; he restores my soul.</p>
+        <span class="verse__ref" data-en="Psalm 23:1–3" data-de="Psalm 23,1&ndash;3">Psalm 23:1&ndash;3</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The Lord will fight for you, and you have only to be silent." data-de="Der HERR wird für euch streiten, und ihr werdet stille sein.">The Lord will fight for you, and you have only to be silent.</p>
+        <span class="verse__ref" data-en="Exodus 14:14" data-de="2. Mose 14,14">Exodus 14:14</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Take my yoke upon you, and learn from me… and you will find rest for your souls." data-de="Nehmet auf euch mein Joch und lernet von mir, so werdet ihr Ruhe finden für eure Seelen.">Take my yoke upon you, and learn from me&hellip; and you will find rest for your souls.</p>
+        <span class="verse__ref" data-en="Matthew 11:29" data-de="Matthäus 11,29">Matthew 11:29</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" id="forgiveness-grace">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Forgiveness &amp; Grace" data-de="Vergebung &amp; Gnade">Forgiveness &amp; Grace</h2>
+    <div class="verses">
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Be kind to one another, tenderhearted, forgiving one another, as God in Christ forgave you." data-de="Seid aber untereinander freundlich, herzlich, und vergebet einer dem andern, gleichwie Gott euch vergeben hat in Christo.">Be kind to one another, tenderhearted, forgiving one another, as God in Christ forgave you.</p>
+        <span class="verse__ref" data-en="Ephesians 4:32" data-de="Epheser 4,32">Ephesians 4:32</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="If we confess our sins, he is faithful and just to forgive us our sins." data-de="So wir aber unsre Sünden bekennen, so ist er treu und gerecht, dass er uns die Sünden vergibt.">If we confess our sins, he is faithful and just to forgive us our sins.</p>
+        <span class="verse__ref" data-en="1 John 1:9" data-de="1. Johannes 1,9">1 John 1:9</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="As far as the east is from the west, so far does he remove our transgressions from us." data-de="So fern der Morgen ist vom Abend, lässt er unsre Übertretungen von uns sein.">As far as the east is from the west, so far does he remove our transgressions from us.</p>
+        <span class="verse__ref" data-en="Psalm 103:12" data-de="Psalm 103,12">Psalm 103:12</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" id="purpose-calling">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Purpose &amp; Calling" data-de="Bestimmung &amp; Berufung">Purpose &amp; Calling</h2>
+    <div class="verses">
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Before I formed you in the womb I knew you." data-de="Ich kannte dich, ehe denn ich dich im Mutterleibe bereitete.">Before I formed you in the womb I knew you.</p>
+        <span class="verse__ref" data-en="Jeremiah 1:5" data-de="Jeremia 1,5">Jeremiah 1:5</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="We are his workmanship, created in Christ Jesus for good works, which God prepared beforehand." data-de="Wir sind sein Werk, geschaffen in Christo Jesu zu guten Werken, zu welchen Gott uns zuvor bereitet hat.">We are his workmanship, created in Christ Jesus for good works, which God prepared beforehand.</p>
+        <span class="verse__ref" data-en="Ephesians 2:10" data-de="Epheser 2,10">Ephesians 2:10</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Who knows whether you have not come to the kingdom for such a time as this?" data-de="Wer weiß, ob du nicht um dieser Zeit willen zum Königreich gekommen bist?">Who knows whether you have not come to the kingdom for such a time as this?</p>
+        <span class="verse__ref" data-en="Esther 4:14" data-de="Esther 4,14">Esther 4:14</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" id="gratitude-joy">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Gratitude &amp; Joy" data-de="Dankbarkeit &amp; Freude">Gratitude &amp; Joy</h2>
+    <div class="verses">
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Rejoice always, pray without ceasing, give thanks in all circumstances." data-de="Seid allezeit fröhlich, betet ohne Unterlass, seid dankbar in allen Dingen.">Rejoice always, pray without ceasing, give thanks in all circumstances.</p>
+        <span class="verse__ref" data-en="1 Thessalonians 5:16–18" data-de="1. Thessalonicher 5,16&ndash;18">1 Thessalonians 5:16&ndash;18</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="This is the day that the Lord has made; let us rejoice and be glad in it." data-de="Dies ist der Tag, den der HERR macht; lasst uns freuen und fröhlich darinnen sein.">This is the day that the Lord has made; let us rejoice and be glad in it.</p>
+        <span class="verse__ref" data-en="Psalm 118:24" data-de="Psalm 118,24">Psalm 118:24</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Count it all joy… when you meet trials of various kinds, for the testing of your faith produces steadfastness." data-de="Achtet es für eitel Freude, wenn ihr in mancherlei Anfechtungen fallet, denn euer Glaube, wenn er bewährt ist, wirkt Geduld.">Count it all joy&hellip; when you meet trials of various kinds, for the testing of your faith produces steadfastness.</p>
+        <span class="verse__ref" data-en="James 1:2–3" data-de="Jakobus 1,2&ndash;3">James 1:2&ndash;3</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" id="wisdom-guidance">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Wisdom &amp; Guidance" data-de="Weisheit &amp; Führung">Wisdom &amp; Guidance</h2>
+    <div class="verses">
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="If any of you lacks wisdom, let him ask God, who gives generously to all without reproach." data-de="So aber jemand unter euch Weisheit mangelt, der bitte Gott, der da gibt einfältig jedermann und rücket's niemand auf.">If any of you lacks wisdom, let him ask God, who gives generously to all without reproach.</p>
+        <span class="verse__ref" data-en="James 1:5" data-de="Jakobus 1,5">James 1:5</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="I will instruct you and teach you in the way you should go; I will counsel you with my eye upon you." data-de="Ich will dich unterweisen und dir den Weg zeigen, den du wandeln sollst; ich will dich mit meinen Augen leiten.">I will instruct you and teach you in the way you should go; I will counsel you with my eye upon you.</p>
+        <span class="verse__ref" data-en="Psalm 32:8" data-de="Psalm 32,8">Psalm 32:8</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The heart of man plans his way, but the Lord establishes his steps." data-de="Des Menschen Herz erdenkt sich seinen Weg; aber der HERR allein gibt, dass er fortgehe.">The heart of man plans his way, but the Lord establishes his steps.</p>
+        <span class="verse__ref" data-en="Proverbs 16:9" data-de="Sprüche 16,9">Proverbs 16:9</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" id="power-of-god">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="The Power of God" data-de="Die Kraft Gottes">The Power of God</h2>
+    <div class="verses">
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="With man this is impossible, but with God all things are possible." data-de="Bei den Menschen ist's unmöglich; aber bei Gott sind alle Dinge möglich.">With man this is impossible, but with God all things are possible.</p>
+        <span class="verse__ref" data-en="Matthew 19:26" data-de="Matthäus 19,26">Matthew 19:26</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="He who began a good work in you will carry it on to completion." data-de="Der in euch angefangen hat das gute Werk, der wird's auch vollführen bis an den Tag Jesu Christi.">He who began a good work in you will carry it on to completion.</p>
+        <span class="verse__ref" data-en="Philippians 1:6" data-de="Philipper 1,6">Philippians 1:6</span>
+      </div>
+      <div class="verse">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="God, the Lord, is my strength; he makes my feet like the deer's." data-de="Denn der HERR ist meine Kraft, und er wird meine Füße machen wie Hirschfüße.">God, the Lord, is my strength; he makes my feet like the deer&rsquo;s.</p>
+        <span class="verse__ref" data-en="Habakkuk 3:19" data-de="Habakuk 3,19">Habakkuk 3:19</span>
+      </div>
+    </div>
+  </section>
+
+  <a class="top-link" href="#top" data-en="Back to top" data-de="Nach oben" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Back to top</a>
+
+</main>
+
+<footer>
+  <p data-en="English Standard Version · for quiet reading, not for sharing outside this page" data-de="Lutherbibel 1912 · zum stillen Lesen, nicht zur Weitergabe außerhalb dieser Seite">English Standard Version &middot; for quiet reading, not for sharing outside this page</p>
+</footer>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Random verse">
+  <button class="overlay__close" id="overlayClose" type="button" aria-label="Close">&times;</button>
+  <div class="overlay__content">
+    <div class="overlay__mark" aria-hidden="true">
+      <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="13" y1="1" x2="13" y2="25" stroke-width="1.2"/>
+        <line x1="2" y1="8" x2="24" y2="8" stroke-width="1.2"/>
+      </svg>
+    </div>
+    <p id="overlayText"></p>
+    <span id="overlayRef"></span>
+    <div class="overlay__actions">
+      <button class="overlay__again" type="button" id="overlayAgain" data-en="Draw another" data-de="Noch einen ziehen">Draw another</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var STORAGE_LANG = 'bible-page-lang';
+    var STORAGE_THEME = 'bible-page-theme';
+
+    /* ---------- Language ---------- */
+
+    function safeGet(key) {
+      try { return localStorage.getItem(key); } catch (e) { return null; }
+    }
+    function safeSet(key, val) {
+      try { localStorage.setItem(key, val); } catch (e) {}
+    }
+
+    var currentLang = safeGet(STORAGE_LANG) || 'en';
+
+    function applyLang(lang) {
+      currentLang = lang;
+      root.setAttribute('lang', lang);
+      document.querySelectorAll('[data-' + lang + ']').forEach(function (el) {
+        el.textContent = el.getAttribute('data-' + lang);
+      });
+      document.querySelectorAll('[data-' + lang + '-html]').forEach(function (el) {
+        el.innerHTML = el.getAttribute('data-' + lang + '-html');
+      });
+      document.querySelectorAll('#langPill button').forEach(function (btn) {
+        btn.classList.toggle('is-active', btn.getAttribute('data-lang') === lang);
+      });
+      safeSet(STORAGE_LANG, lang);
+    }
+
+    document.querySelectorAll('#langPill button').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        applyLang(btn.getAttribute('data-lang'));
+      });
+    });
+
+    applyLang(currentLang);
+
+    /* ---------- Theme ---------- */
+
+    var storedTheme = safeGet(STORAGE_THEME);
+
+    function setThemeButtons(effective) {
+      document.querySelectorAll('#themePill button').forEach(function (btn) {
+        btn.classList.toggle('is-active', btn.getAttribute('data-theme-choice') === effective);
+      });
+    }
+
+    function applyTheme(theme, persist) {
+      if (theme) {
+        root.setAttribute('data-theme', theme);
+        if (persist) safeSet(STORAGE_THEME, theme);
+      }
+      var effective = theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      setThemeButtons(effective);
+    }
+
+    document.querySelectorAll('#themePill button').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        applyTheme(btn.getAttribute('data-theme-choice'), true);
+      });
+    });
+
+    applyTheme(storedTheme, false);
+
+    if (!storedTheme && window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+        if (!safeGet(STORAGE_THEME)) setThemeButtons(e.matches ? 'dark' : 'light');
+      });
+    }
+
+    /* ---------- Reveal the section menu once the hero is scrolled past ---------- */
+
+    var hero = document.querySelector('.hero');
+    var toc = document.querySelector('nav.toc');
+
+    function updateTocVisibility() {
+      var threshold = hero.offsetHeight * 0.5;
+      toc.classList.toggle('is-visible', window.scrollY > threshold);
+    }
+    window.addEventListener('scroll', updateTocVisibility, { passive: true });
+    updateTocVisibility();
+
+    /* ---------- Random verse ---------- */
+
+    var overlay = document.getElementById('overlay');
+    var overlayText = document.getElementById('overlayText');
+    var overlayRef = document.getElementById('overlayRef');
+    var randomBtn = document.getElementById('randomBtn');
+    var overlayClose = document.getElementById('overlayClose');
+    var overlayAgain = document.getElementById('overlayAgain');
+    var lastIndex = -1;
+
+    function getVerses() {
+      return Array.prototype.map.call(document.querySelectorAll('.verse'), function (v) {
+        return {
+          text: v.querySelector('.verse__text').textContent.trim(),
+          ref: v.querySelector('.verse__ref').textContent.trim()
+        };
+      });
+    }
+
+    function showRandomVerse() {
+      overlayText.classList.remove('is-visible');
+      overlayRef.classList.remove('is-visible');
+      var verses = getVerses();
+      var i;
+      do { i = Math.floor(Math.random() * verses.length); } while (verses.length > 1 && i === lastIndex);
+      lastIndex = i;
+      var v = verses[i];
+      var wasOpen = overlay.classList.contains('is-open');
+      setTimeout(function () {
+        overlayText.textContent = '\u201C' + v.text + '\u201D';
+        overlayRef.textContent = v.ref;
+        requestAnimationFrame(function () {
+          overlayText.classList.add('is-visible');
+          overlayRef.classList.add('is-visible');
+        });
+      }, wasOpen ? 250 : 0);
+    }
+
+    function openOverlay() {
+      showRandomVerse();
+      overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      overlayClose.focus();
+    }
+
+    function closeOverlay() {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+      randomBtn.focus();
+    }
+
+    randomBtn.addEventListener('click', openOverlay);
+    overlayClose.addEventListener('click', closeOverlay);
+    overlayAgain.addEventListener('click', showRandomVerse);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeOverlay(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeOverlay();
+    });
+  })();
+</script>
+
+</body>
+</html>
