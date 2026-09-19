@@ -338,6 +338,216 @@
 
   .verse__ref::before { content: ""; display: inline-block; width: 14px; height: 1px; background: var(--accent-soft); opacity: 0.7; }
 
+  .verse__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: 62ch;
+  }
+
+  .verse__bookmark {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: transparent;
+    color: var(--ink-faint);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: color 0.25s ease, background-color 0.25s ease;
+  }
+  .verse__bookmark svg { width: 17px; height: 17px; }
+  .verse__bookmark svg path { stroke: currentColor; fill: none; transition: fill 0.25s ease; }
+  .verse__bookmark:hover { color: var(--gold); background: var(--bg-soft); }
+  .verse__bookmark.is-bookmarked { color: var(--gold); }
+  .verse__bookmark.is-bookmarked svg path { fill: var(--gold); }
+
+  .verse[data-extended="true"] { display: none; }
+  body.show-extended .verse[data-extended="true"] { display: block; }
+
+  section.theme[data-extended-section="true"] { display: none; }
+  body.show-extended section.theme[data-extended-section="true"] { display: block; }
+
+  li[data-extended-toc="true"] { display: none; }
+  body.show-extended li[data-extended-toc="true"] { display: inline-block; }
+
+  .extended-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    margin-top: 1.8rem;
+  }
+
+  .extended-toggle span {
+    font-family: var(--font-body);
+    font-size: 0.86rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+  }
+
+  .switch {
+    position: relative;
+    width: 40px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--rule);
+    border: none;
+    cursor: pointer;
+    flex: none;
+    transition: background-color 0.25s ease;
+  }
+  .switch::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--bg);
+    box-shadow: 0 1px 3px var(--shadow);
+    transition: transform 0.25s ease;
+  }
+  .switch.is-on { background: var(--accent); }
+  .switch.is-on::after { transform: translateX(18px); }
+
+  /* ---------- Bookmarks icon + panel ---------- */
+
+  .bookmarks-icon {
+    position: absolute;
+    top: 1.3rem;
+    left: 1.3rem;
+    z-index: 5;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink-faint);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.55;
+    transition: opacity 0.3s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .bookmarks-icon:hover, .bookmarks-icon:focus-visible { opacity: 1; color: var(--accent); border-color: var(--accent-soft); }
+  .bookmarks-icon svg { width: 15px; height: 15px; }
+  .bookmarks-icon svg path { stroke: currentColor; fill: none; }
+
+  .panel {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 4rem 1.5rem;
+    background: color-mix(in srgb, var(--ink) 45%, transparent);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease;
+    overflow-y: auto;
+  }
+  .panel.is-open { opacity: 1; visibility: visible; }
+
+  .panel__card {
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    max-width: 620px;
+    width: 100%;
+    padding: 2.4rem 2rem 2.2rem;
+    box-shadow: 0 24px 60px -20px var(--shadow);
+  }
+
+  .panel__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.8rem;
+  }
+
+  .panel__title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .panel__close {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink-faint);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .panel__close:hover { color: var(--accent); border-color: var(--accent-soft); }
+
+  .panel__empty {
+    font-family: var(--font-body);
+    font-style: italic;
+    color: var(--ink-faint);
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .panel__list { display: flex; flex-direction: column; gap: 1.6rem; }
+
+  .panel__item {
+    padding-bottom: 1.6rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .panel__item:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .panel__item-text {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.08rem;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0 0 0.5rem;
+  }
+
+  .panel__item-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .panel__item-ref {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .panel__item-remove {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .panel__item-remove:hover { color: var(--accent); }
+
   .top-link {
     display: block;
     text-align: center;
@@ -467,6 +677,25 @@
   }
   .overlay__again:hover, .overlay__again:focus-visible { border-color: var(--accent-soft); color: var(--accent); background: var(--bg-soft); }
 
+  .overlay__bookmark {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink-faint);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.25s ease, border-color 0.25s ease;
+  }
+  .overlay__bookmark svg { width: 18px; height: 18px; }
+  .overlay__bookmark svg path { stroke: currentColor; fill: none; transition: fill 0.25s ease; }
+  .overlay__bookmark:hover { color: var(--gold); border-color: var(--gold); }
+  .overlay__bookmark.is-bookmarked { color: var(--gold); border-color: var(--gold); }
+  .overlay__bookmark.is-bookmarked svg path { fill: var(--gold); }
+
   @media (max-width: 560px) {
     .overlay__close { top: 1.1rem; right: 1.1rem; width: 38px; height: 38px; }
     #overlayText { font-size: 1.45rem; }
@@ -476,6 +705,9 @@
 <body>
 
 <header class="hero">
+  <button class="bookmarks-icon" id="bookmarksIcon" type="button" aria-label="View bookmarked verses">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+  </button>
   <div class="controls" id="controls">
     <div class="pill" id="langPill" role="group" aria-label="Language">
       <button type="button" data-lang="en" class="is-active">EN</button>
@@ -529,7 +761,14 @@
     <li><a href="#gratitude-joy" data-en="Gratitude &amp; Joy" data-de="Dankbarkeit &amp; Freude">Gratitude &amp; Joy</a></li>
     <li><a href="#wisdom-guidance" data-en="Wisdom &amp; Guidance" data-de="Weisheit &amp; Führung">Wisdom &amp; Guidance</a></li>
     <li><a href="#power-of-god" data-en="The Power of God" data-de="Die Kraft Gottes">The Power of God</a></li>
+    <li data-extended-toc="true"><a href="#provision-confidence" data-en="Provision &amp; Confidence" data-de="Versorgung &amp; Zuversicht">Provision &amp; Confidence</a></li>
+    <li data-extended-toc="true"><a href="#guidance-decisions" data-en="Guidance &amp; Decisions" data-de="Führung &amp; Entscheidungen">Guidance &amp; Decisions</a></li>
+    <li data-extended-toc="true"><a href="#praise-worship" data-en="Praise &amp; Worship" data-de="Lob &amp; Anbetung">Praise &amp; Worship</a></li>
   </ul>
+  <div class="extended-toggle">
+    <span data-en="Display more quotes" data-de="Mehr Verse anzeigen">Display more quotes</span>
+    <button class="switch" id="extendedSwitch" type="button" role="switch" aria-checked="false" aria-label="Display more quotes"></button>
+  </div>
 </nav>
 
 <main>
@@ -538,25 +777,75 @@
     <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
     <h2 class="theme__title" data-en="Trust &amp; Faith" data-de="Vertrauen &amp; Glaube">Trust &amp; Faith</h2>
     <div class="verses">
-      <div class="verse">
+      <div class="verse" data-id="v1">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Trust in the Lord with all your heart, and do not lean on your own understanding." data-de="Verlaß dich auf den HERRN von ganzem Herzen und verlaß dich nicht auf deinen Verstand.">Trust in the Lord with all your heart, and do not lean on your own understanding.</p>
-        <span class="verse__ref" data-en="Proverbs 3:5–6" data-de="Sprüche 3,5&ndash;6">Proverbs 3:5&ndash;6</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Proverbs 3:5–6" data-de="Sprüche 3,5&ndash;6">Proverbs 3:5&ndash;6</span>
+          <button class="verse__bookmark" type="button" data-id="v1" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v2">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="When I am afraid, I put my trust in you." data-de="Wenn ich mich fürchte, so hoffe ich auf dich.">When I am afraid, I put my trust in you.</p>
-        <span class="verse__ref" data-en="Psalm 56:3" data-de="Psalm 56,4">Psalm 56:3</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 56:3" data-de="Psalm 56,4">Psalm 56:3</span>
+          <button class="verse__bookmark" type="button" data-id="v2" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v3">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Faith is the assurance of things hoped for, the conviction of things not seen." data-de="Es ist aber der Glaube eine gewisse Zuversicht des, das man hofft, und ein Nichtzweifeln an dem, das man nicht sieht.">Faith is the assurance of things hoped for, the conviction of things not seen.</p>
-        <span class="verse__ref" data-en="Hebrews 11:1" data-de="Hebräer 11,1">Hebrews 11:1</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Hebrews 11:1" data-de="Hebräer 11,1">Hebrews 11:1</span>
+          <button class="verse__bookmark" type="button" data-id="v3" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v4">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="For we walk by faith, not by sight." data-de="Denn wir wandeln im Glauben, und nicht im Schauen.">For we walk by faith, not by sight.</p>
-        <span class="verse__ref" data-en="2 Corinthians 5:7" data-de="2. Korinther 5,7">2 Corinthians 5:7</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="2 Corinthians 5:7" data-de="2. Korinther 5,7">2 Corinthians 5:7</span>
+          <button class="verse__bookmark" type="button" data-id="v4" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v61" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Commit your way to the Lord; trust in him, and he will act." data-de="Befiehl dem HERRN deine Wege und hoffe auf ihn, er wird's wohl machen.">Commit your way to the Lord; trust in him, and he will act.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 37:5" data-de="Psalm 37,5">Psalm 37:5</span>
+          <button class="verse__bookmark" type="button" data-id="v61" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v90" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The Lord is my light and my salvation; whom shall I fear?" data-de="Der HERR ist mein Licht und mein Heil; vor wem sollte ich mich fürchten?">The Lord is my light and my salvation; whom shall I fear?</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 27:1" data-de="Psalm 27,1">Psalm 27:1</span>
+          <button class="verse__bookmark" type="button" data-id="v90" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v97" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="I have set the Lord always before me: because he is at my right hand, I shall not be moved." data-de="Ich habe den HERRN allezeit vor Augen; denn er ist mir zur Rechten, so werde ich fest bleiben.">I have set the Lord always before me: because he is at my right hand, I shall not be moved.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 16:8" data-de="Psalm 16,8">Psalm 16:8</span>
+          <button class="verse__bookmark" type="button" data-id="v97" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -565,40 +854,125 @@
     <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
     <h2 class="theme__title" data-en="Strength &amp; Courage" data-de="Kraft &amp; Mut">Strength &amp; Courage</h2>
     <div class="verses">
-      <div class="verse">
+      <div class="verse" data-id="v5">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go." data-de="Sei getrost und unverzagt; fürchte dich nicht und lass dich nicht erschrecken, denn der HERR, dein Gott, ist mit dir in allem, was du tun wirst.">Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.</p>
-        <span class="verse__ref" data-en="Joshua 1:9" data-de="Josua 1,9">Joshua 1:9</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Joshua 1:9" data-de="Josua 1,9">Joshua 1:9</span>
+          <button class="verse__bookmark" type="button" data-id="v5" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v6">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you." data-de="So fürchte dich nicht, ich bin mit dir; weiche nicht, denn ich bin dein Gott. Ich stärke dich, ich helfe dir auch.">Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you.</p>
-        <span class="verse__ref" data-en="Isaiah 41:10" data-de="Jesaja 41,10">Isaiah 41:10</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Isaiah 41:10" data-de="Jesaja 41,10">Isaiah 41:10</span>
+          <button class="verse__bookmark" type="button" data-id="v6" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v7">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="I can do all things through him who strengthens me." data-de="Ich vermag alles durch den, der mich mächtig macht, Christus.">I can do all things through him who strengthens me.</p>
-        <span class="verse__ref" data-en="Philippians 4:13" data-de="Philipper 4,13">Philippians 4:13</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Philippians 4:13" data-de="Philipper 4,13">Philippians 4:13</span>
+          <button class="verse__bookmark" type="button" data-id="v7" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v8">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="My grace is sufficient for you, for my power is made perfect in weakness." data-de="Lass dir an meiner Gnade genügen; denn meine Kraft ist in den Schwachen mächtig.">My grace is sufficient for you, for my power is made perfect in weakness.</p>
-        <span class="verse__ref" data-en="2 Corinthians 12:9" data-de="2. Korinther 12,9">2 Corinthians 12:9</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="2 Corinthians 12:9" data-de="2. Korinther 12,9">2 Corinthians 12:9</span>
+          <button class="verse__bookmark" type="button" data-id="v8" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v9">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="He gives power to the faint, and to him who has no might he increases strength." data-de="Er gibt den Müden Kraft, und Stärke genug dem Unvermögenden.">He gives power to the faint, and to him who has no might he increases strength.</p>
-        <span class="verse__ref" data-en="Isaiah 40:29" data-de="Jesaja 40,29">Isaiah 40:29</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Isaiah 40:29" data-de="Jesaja 40,29">Isaiah 40:29</span>
+          <button class="verse__bookmark" type="button" data-id="v9" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v10">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="My flesh and my heart may fail, but God is the strength of my heart and my portion forever." data-de="Wenn mir gleich Leib und Seele verschmachtet, so bist du doch, Gott, allezeit meines Herzens Trost und mein Teil.">My flesh and my heart may fail, but God is the strength of my heart and my portion forever.</p>
-        <span class="verse__ref" data-en="Psalm 73:26" data-de="Psalm 73,26">Psalm 73:26</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 73:26" data-de="Psalm 73,26">Psalm 73:26</span>
+          <button class="verse__bookmark" type="button" data-id="v10" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v11">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="The joy of the Lord is your strength." data-de="Die Freude am HERRN ist eure Stärke.">The joy of the Lord is your strength.</p>
-        <span class="verse__ref" data-en="Nehemiah 8:10" data-de="Nehemia 8,10">Nehemiah 8:10</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Nehemiah 8:10" data-de="Nehemia 8,10">Nehemiah 8:10</span>
+          <button class="verse__bookmark" type="button" data-id="v11" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v62" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Be strong in the Lord and in the strength of his might." data-de="Seid stark in dem HERRN und in der Macht seiner Stärke.">Be strong in the Lord and in the strength of his might.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Ephesians 6:10" data-de="Epheser 6,10">Ephesians 6:10</span>
+          <button class="verse__bookmark" type="button" data-id="v62" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v87" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind." data-de="Denn Gott hat uns nicht gegeben den Geist der Furcht, sondern der Kraft und der Liebe und der Zucht.">For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="2 Timothy 1:7" data-de="2. Timotheus 1,7">2 Timothy 1:7</span>
+          <button class="verse__bookmark" type="button" data-id="v87" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v88" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Watch ye, stand fast in the faith, quit you like men, be strong." data-de="Wachet, stehet im Glauben, seid männlich und seid stark!">Watch ye, stand fast in the faith, quit you like men, be strong.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="1 Corinthians 16:13" data-de="1. Korinther 16,13">1 Corinthians 16:13</span>
+          <button class="verse__bookmark" type="button" data-id="v88" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v99" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The Lord is on my side; I will not fear: what can man do unto me?" data-de="Der HERR ist mit mir, darum fürchte ich mich nicht; was können mir Menschen tun?">The Lord is on my side; I will not fear: what can man do unto me?</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 118:6" data-de="Psalm 118,6">Psalm 118:6</span>
+          <button class="verse__bookmark" type="button" data-id="v99" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v100" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="For I the Lord thy God will hold thy right hand, saying unto thee, Fear not; I will help thee." data-de="Denn ich bin der HERR, dein Gott, der deine rechte Hand stärkt und zu dir spricht: Fürchte dich nicht, ich helfe dir.">For I the Lord thy God will hold thy right hand, saying unto thee, Fear not; I will help thee.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Isaiah 41:13" data-de="Jesaja 41,13">Isaiah 41:13</span>
+          <button class="verse__bookmark" type="button" data-id="v100" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -607,45 +981,105 @@
     <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
     <h2 class="theme__title" data-en="Comfort &amp; Healing" data-de="Trost &amp; Heilung">Comfort &amp; Healing</h2>
     <div class="verses">
-      <div class="verse">
+      <div class="verse" data-id="v12">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="The Lord is near to the brokenhearted and saves the crushed in spirit." data-de="Der HERR ist nahe bei denen, die zerbrochnes Herzens sind, und hilft denen, die ein zerschlagen Gemüt haben.">The Lord is near to the brokenhearted and saves the crushed in spirit.</p>
-        <span class="verse__ref" data-en="Psalm 34:18" data-de="Psalm 34,19">Psalm 34:18</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 34:18" data-de="Psalm 34,19">Psalm 34:18</span>
+          <button class="verse__bookmark" type="button" data-id="v12" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v13">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="He heals the brokenhearted and binds up their wounds." data-de="Er heilt, die zerbrochnes Herzens sind, und verbindet ihre Schmerzen.">He heals the brokenhearted and binds up their wounds.</p>
-        <span class="verse__ref" data-en="Psalm 147:3" data-de="Psalm 147,3">Psalm 147:3</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 147:3" data-de="Psalm 147,3">Psalm 147:3</span>
+          <button class="verse__bookmark" type="button" data-id="v13" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v14">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope." data-de="Denn ich weiß wohl, was ich für Gedanken über euch habe, spricht der HERR: Gedanken des Friedens und nicht des Leides, dass ich euch gebe das Ende, des ihr wartet.">For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope.</p>
-        <span class="verse__ref" data-en="Jeremiah 29:11" data-de="Jeremia 29,11">Jeremiah 29:11</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Jeremiah 29:11" data-de="Jeremia 29,11">Jeremiah 29:11</span>
+          <button class="verse__bookmark" type="button" data-id="v14" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v15">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Come to me, all who labor and are heavy laden, and I will give you rest." data-de="Kommet her zu mir alle, die ihr mühselig und beladen seid; ich will euch erquicken.">Come to me, all who labor and are heavy laden, and I will give you rest.</p>
-        <span class="verse__ref" data-en="Matthew 11:28" data-de="Matthäus 11,28">Matthew 11:28</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Matthew 11:28" data-de="Matthäus 11,28">Matthew 11:28</span>
+          <button class="verse__bookmark" type="button" data-id="v15" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v16">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="The Father of mercies and God of all comfort, who comforts us in all our affliction." data-de="Der Vater der Barmherzigkeit und Gott alles Trostes, der uns tröstet in aller unsrer Trübsal.">The Father of mercies and God of all comfort, who comforts us in all our affliction.</p>
-        <span class="verse__ref" data-en="2 Corinthians 1:3–4" data-de="2. Korinther 1,3&ndash;4">2 Corinthians 1:3&ndash;4</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="2 Corinthians 1:3–4" data-de="2. Korinther 1,3&ndash;4">2 Corinthians 1:3&ndash;4</span>
+          <button class="verse__bookmark" type="button" data-id="v16" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v17">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Weeping may tarry for the night, but joy comes with the morning." data-de="Den Abend lang währt das Weinen, aber des Morgens ist Freude.">Weeping may tarry for the night, but joy comes with the morning.</p>
-        <span class="verse__ref" data-en="Psalm 30:5" data-de="Psalm 30,6">Psalm 30:5</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 30:5" data-de="Psalm 30,6">Psalm 30:5</span>
+          <button class="verse__bookmark" type="button" data-id="v17" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v18">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="He will wipe away every tear from their eyes, and death shall be no more, neither shall there be mourning." data-de="Und Gott wird abwischen alle Tränen von ihren Augen, und der Tod wird nicht mehr sein, noch Leid noch Geschrei noch Schmerz wird mehr sein.">He will wipe away every tear from their eyes, and death shall be no more, neither shall there be mourning.</p>
-        <span class="verse__ref" data-en="Revelation 21:4" data-de="Offenbarung 21,4">Revelation 21:4</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Revelation 21:4" data-de="Offenbarung 21,4">Revelation 21:4</span>
+          <button class="verse__bookmark" type="button" data-id="v18" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v19">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Cast your burden on the Lord, and he will sustain you." data-de="Wirf dein Anliegen auf den HERRN; der wird dich versorgen.">Cast your burden on the Lord, and he will sustain you.</p>
-        <span class="verse__ref" data-en="Psalm 55:22" data-de="Psalm 55,23">Psalm 55:22</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 55:22" data-de="Psalm 55,23">Psalm 55:22</span>
+          <button class="verse__bookmark" type="button" data-id="v19" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v63" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="As one whom his mother comforts, so I will comfort you." data-de="Ich will euch trösten, wie einen seine Mutter tröstet.">As one whom his mother comforts, so I will comfort you.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Isaiah 66:13" data-de="Jesaja 66,13">Isaiah 66:13</span>
+          <button class="verse__bookmark" type="button" data-id="v63" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v101" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Why art thou cast down, O my soul? hope thou in God: for I shall yet praise him." data-de="Was betrübst du dich, meine Seele? Harre auf Gott; denn ich werde ihm noch danken.">Why art thou cast down, O my soul? hope thou in God: for I shall yet praise him.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 42:11" data-de="Psalm 42,12">Psalm 42:11</span>
+          <button class="verse__bookmark" type="button" data-id="v101" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -654,35 +1088,85 @@
     <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
     <h2 class="theme__title" data-en="Peace &amp; Anxiety" data-de="Frieden &amp; Angst">Peace &amp; Anxiety</h2>
     <div class="verses">
-      <div class="verse">
+      <div class="verse" data-id="v20">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Do not be anxious about anything… and the peace of God, which surpasses all understanding, will guard your hearts and your minds." data-de="Sorget nichts, sondern lasset eure Bitten im Gebet und Flehen mit Danksagung vor Gott kund werden. Und der Friede Gottes, welcher höher ist denn alle Vernunft, bewahre eure Herzen und Sinne.">Do not be anxious about anything&hellip; and the peace of God, which surpasses all understanding, will guard your hearts and your minds.</p>
-        <span class="verse__ref" data-en="Philippians 4:6–7" data-de="Philipper 4,6&ndash;7">Philippians 4:6&ndash;7</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Philippians 4:6–7" data-de="Philipper 4,6&ndash;7">Philippians 4:6&ndash;7</span>
+          <button class="verse__bookmark" type="button" data-id="v20" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v21">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Peace I leave with you; my peace I give to you… Let not your hearts be troubled, neither let them be afraid." data-de="Den Frieden lasse ich euch, meinen Frieden gebe ich euch. Euer Herz erschrecke nicht und fürchte sich nicht.">Peace I leave with you; my peace I give to you&hellip; Let not your hearts be troubled, neither let them be afraid.</p>
-        <span class="verse__ref" data-en="John 14:27" data-de="Johannes 14,27">John 14:27</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="John 14:27" data-de="Johannes 14,27">John 14:27</span>
+          <button class="verse__bookmark" type="button" data-id="v21" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v22">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="When you pass through the waters, I will be with you; and through the rivers, they shall not overwhelm you." data-de="Wenn du durch Wasser gehst, will ich bei dir sein, dass dich die Ströme nicht sollen ersäufen.">When you pass through the waters, I will be with you; and through the rivers, they shall not overwhelm you.</p>
-        <span class="verse__ref" data-en="Isaiah 43:2" data-de="Jesaja 43,2">Isaiah 43:2</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Isaiah 43:2" data-de="Jesaja 43,2">Isaiah 43:2</span>
+          <button class="verse__bookmark" type="button" data-id="v22" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v23">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Do not be anxious about tomorrow, for tomorrow will be anxious for itself." data-de="Darum sorgt nicht für den andern Morgen; denn der morgende Tag wird für das Seine sorgen.">Do not be anxious about tomorrow, for tomorrow will be anxious for itself.</p>
-        <span class="verse__ref" data-en="Matthew 6:34" data-de="Matthäus 6,34">Matthew 6:34</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Matthew 6:34" data-de="Matthäus 6,34">Matthew 6:34</span>
+          <button class="verse__bookmark" type="button" data-id="v23" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v24">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="There is no fear in love, but perfect love casts out fear." data-de="Furcht ist nicht in der Liebe, sondern die völlige Liebe treibt die Furcht aus.">There is no fear in love, but perfect love casts out fear.</p>
-        <span class="verse__ref" data-en="1 John 4:18" data-de="1. Johannes 4,18">1 John 4:18</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="1 John 4:18" data-de="1. Johannes 4,18">1 John 4:18</span>
+          <button class="verse__bookmark" type="button" data-id="v24" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v25">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Be strong and courageous… for it is the Lord your God who goes with you. He will not leave you or forsake you." data-de="Seid getrost und unverzagt, denn der HERR, dein Gott, wird selber mit dir wandeln und wird die Hand nicht abtun noch dich verlassen.">Be strong and courageous&hellip; for it is the Lord your God who goes with you. He will not leave you or forsake you.</p>
-        <span class="verse__ref" data-en="Deuteronomy 31:6" data-de="5. Mose 31,6">Deuteronomy 31:6</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Deuteronomy 31:6" data-de="5. Mose 31,6">Deuteronomy 31:6</span>
+          <button class="verse__bookmark" type="button" data-id="v25" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v64" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="You keep him in perfect peace whose mind is stayed on you." data-de="Du erhältst stets Frieden nach gewisser Zusage, denn auf dich hofft man.">You keep him in perfect peace whose mind is stayed on you.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Isaiah 26:3" data-de="Jesaja 26,3">Isaiah 26:3</span>
+          <button class="verse__bookmark" type="button" data-id="v64" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v93" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="I sought the Lord, and he heard me, and delivered me from all my fears." data-de="Da ich den HERRN suchte, antwortete er mir und errettete mich aus aller meiner Furcht.">I sought the Lord, and he heard me, and delivered me from all my fears.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 34:4" data-de="Psalm 34,5">Psalm 34:4</span>
+          <button class="verse__bookmark" type="button" data-id="v93" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -691,40 +1175,85 @@
     <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
     <h2 class="theme__title" data-en="Hope &amp; Renewal" data-de="Hoffnung &amp; Erneuerung">Hope &amp; Renewal</h2>
     <div class="verses">
-      <div class="verse">
+      <div class="verse" data-id="v26">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="They who wait for the Lord shall renew their strength; they shall mount up with wings like eagles." data-de="Die auf den HERRN harren, kriegen neue Kraft, dass sie auffahren mit Flügeln wie Adler.">They who wait for the Lord shall renew their strength; they shall mount up with wings like eagles.</p>
-        <span class="verse__ref" data-en="Isaiah 40:31" data-de="Jesaja 40,31">Isaiah 40:31</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Isaiah 40:31" data-de="Jesaja 40,31">Isaiah 40:31</span>
+          <button class="verse__bookmark" type="button" data-id="v26" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v27">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="The steadfast love of the Lord never ceases… they are new every morning." data-de="Die Güte des HERRN ist's, dass wir nicht gar aus sind; sie ist alle Morgen neu.">The steadfast love of the Lord never ceases&hellip; they are new every morning.</p>
-        <span class="verse__ref" data-en="Lamentations 3:22–23" data-de="Klagelieder 3,22&ndash;23">Lamentations 3:22&ndash;23</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Lamentations 3:22–23" data-de="Klagelieder 3,22&ndash;23">Lamentations 3:22&ndash;23</span>
+          <button class="verse__bookmark" type="button" data-id="v27" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v28">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="And we know that for those who love God all things work together for good." data-de="Wir wissen aber, dass denen, die Gott lieben, alle Dinge zum Besten dienen.">And we know that for those who love God all things work together for good.</p>
-        <span class="verse__ref" data-en="Romans 8:28" data-de="Römer 8,28">Romans 8:28</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Romans 8:28" data-de="Römer 8,28">Romans 8:28</span>
+          <button class="verse__bookmark" type="button" data-id="v28" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v29">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="If anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come." data-de="Ist jemand in Christo, so ist er eine neue Kreatur; das Alte ist vergangen, siehe, es ist alles neu geworden.">If anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.</p>
-        <span class="verse__ref" data-en="2 Corinthians 5:17" data-de="2. Korinther 5,17">2 Corinthians 5:17</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="2 Corinthians 5:17" data-de="2. Korinther 5,17">2 Corinthians 5:17</span>
+          <button class="verse__bookmark" type="button" data-id="v29" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v30">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Behold, I am doing a new thing; now it springs forth, do you not perceive it?" data-de="Siehe, ich will ein Neues machen, jetzt soll es aufwachsen, und ihr werdet's erfahren.">Behold, I am doing a new thing; now it springs forth, do you not perceive it?</p>
-        <span class="verse__ref" data-en="Isaiah 43:19" data-de="Jesaja 43,19">Isaiah 43:19</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Isaiah 43:19" data-de="Jesaja 43,19">Isaiah 43:19</span>
+          <button class="verse__bookmark" type="button" data-id="v30" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v31">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="I will give you a new heart, and a new spirit I will put within you." data-de="Und ich will euch ein neues Herz und einen neuen Geist in euch geben.">I will give you a new heart, and a new spirit I will put within you.</p>
-        <span class="verse__ref" data-en="Ezekiel 36:26" data-de="Hesekiel 36,26">Ezekiel 36:26</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Ezekiel 36:26" data-de="Hesekiel 36,26">Ezekiel 36:26</span>
+          <button class="verse__bookmark" type="button" data-id="v31" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v32">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="He who began a good work in you will bring it to completion." data-de="Der in euch angefangen hat das gute Werk, der wird's auch vollführen bis an den Tag Jesu Christi.">He who began a good work in you will bring it to completion.</p>
-        <span class="verse__ref" data-en="Philippians 1:6" data-de="Philipper 1,6">Philippians 1:6</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Philippians 1:6" data-de="Philipper 1,6">Philippians 1:6</span>
+          <button class="verse__bookmark" type="button" data-id="v32" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v65" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="May the God of hope fill you with all joy and peace in believing." data-de="Der Gott der Hoffnung aber erfülle euch mit aller Freude und Frieden im Glauben.">May the God of hope fill you with all joy and peace in believing.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Romans 15:13" data-de="Römer 15,13">Romans 15:13</span>
+          <button class="verse__bookmark" type="button" data-id="v65" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -733,20 +1262,55 @@
     <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
     <h2 class="theme__title" data-en="Love &amp; Reassurance" data-de="Liebe &amp; Geborgenheit">Love &amp; Reassurance</h2>
     <div class="verses">
-      <div class="verse">
+      <div class="verse" data-id="v33">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="The Lord your God is in your midst… he will rejoice over you with gladness." data-de="Der HERR, dein Gott, ist bei dir, ein starker Heiland; er wird sich über dich freuen und dir freundlich sein.">The Lord your God is in your midst&hellip; he will rejoice over you with gladness.</p>
-        <span class="verse__ref" data-en="Zephaniah 3:17" data-de="Zefanja 3,17">Zephaniah 3:17</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Zephaniah 3:17" data-de="Zefanja 3,17">Zephaniah 3:17</span>
+          <button class="verse__bookmark" type="button" data-id="v33" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v34">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me." data-de="Und ob ich schon wanderte im finstern Tal, fürchte ich kein Unglück; denn du bist bei mir.">Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me.</p>
-        <span class="verse__ref" data-en="Psalm 23:4" data-de="Psalm 23,4">Psalm 23:4</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 23:4" data-de="Psalm 23,4">Psalm 23:4</span>
+          <button class="verse__bookmark" type="button" data-id="v34" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v35">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Casting all your anxieties on him, because he cares for you." data-de="Alle Sorge werfet auf ihn; denn er sorgt für euch.">Casting all your anxieties on him, because he cares for you.</p>
-        <span class="verse__ref" data-en="1 Peter 5:7" data-de="1. Petrus 5,7">1 Peter 5:7</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="1 Peter 5:7" data-de="1. Petrus 5,7">1 Peter 5:7</span>
+          <button class="verse__bookmark" type="button" data-id="v35" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v66" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Neither death nor life will be able to separate us from the love of God." data-de="Weder Tod noch Leben kann uns scheiden von der Liebe Gottes.">Neither death nor life will be able to separate us from the love of God.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Romans 8:38–39" data-de="Römer 8,38&ndash;39">Romans 8:38–39</span>
+          <button class="verse__bookmark" type="button" data-id="v66" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v94" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The mountains shall depart, and the hills be removed; but my kindness shall not depart from thee." data-de="Es sollen wohl Berge weichen und Hügel hinfallen, aber meine Gnade soll nicht von dir weichen, spricht der HERR.">The mountains shall depart, and the hills be removed; but my kindness shall not depart from thee.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Isaiah 54:10" data-de="Jesaja 54,10">Isaiah 54:10</span>
+          <button class="verse__bookmark" type="button" data-id="v94" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -755,25 +1319,75 @@
     <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
     <h2 class="theme__title" data-en="God&rsquo;s Presence &amp; Faithfulness" data-de="Gottes Gegenwart &amp; Treue">God&rsquo;s Presence &amp; Faithfulness</h2>
     <div class="verses">
-      <div class="verse">
+      <div class="verse" data-id="v36">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="God is our refuge and strength, a very present help in trouble." data-de="Gott ist unsre Zuversicht und Stärke, eine Hilfe in den großen Nöten, die uns getroffen haben.">God is our refuge and strength, a very present help in trouble.</p>
-        <span class="verse__ref" data-en="Psalm 46:1" data-de="Psalm 46,2">Psalm 46:1</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 46:1" data-de="Psalm 46,2">Psalm 46:1</span>
+          <button class="verse__bookmark" type="button" data-id="v36" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v37">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="I lift up my eyes to the hills. From where does my help come? My help comes from the Lord." data-de="Ich hebe meine Augen auf zu den Bergen. Woher kommt mir Hilfe? Meine Hilfe kommt vom HERRN, der Himmel und Erde gemacht hat.">I lift up my eyes to the hills. From where does my help come? My help comes from the Lord.</p>
-        <span class="verse__ref" data-en="Psalm 121:1–2" data-de="Psalm 121,1&ndash;2">Psalm 121:1&ndash;2</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 121:1–2" data-de="Psalm 121,1&ndash;2">Psalm 121:1&ndash;2</span>
+          <button class="verse__bookmark" type="button" data-id="v37" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v38">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="The Lord is good to those who wait for him, to the soul who seeks him." data-de="Der HERR ist freundlich dem, der auf ihn harrt, und der Seele, die nach ihm fragt.">The Lord is good to those who wait for him, to the soul who seeks him.</p>
-        <span class="verse__ref" data-en="Lamentations 3:25" data-de="Klagelieder 3,25">Lamentations 3:25</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Lamentations 3:25" data-de="Klagelieder 3,25">Lamentations 3:25</span>
+          <button class="verse__bookmark" type="button" data-id="v38" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v39">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="The eternal God is your dwelling place, and underneath are the everlasting arms." data-de="Zuflucht ist bei dem alten Gott und unten ewige Arme.">The eternal God is your dwelling place, and underneath are the everlasting arms.</p>
-        <span class="verse__ref" data-en="Deuteronomy 33:27" data-de="5. Mose 33,27">Deuteronomy 33:27</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Deuteronomy 33:27" data-de="5. Mose 33,27">Deuteronomy 33:27</span>
+          <button class="verse__bookmark" type="button" data-id="v39" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v67" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Where shall I go from your Spirit? Or where shall I flee from your presence?" data-de="Wo soll ich hin gehen vor deinem Geist, und wo soll ich hin fliehen vor deinem Angesicht?">Where shall I go from your Spirit? Or where shall I flee from your presence?</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 139:7" data-de="Psalm 139,7">Psalm 139:7</span>
+          <button class="verse__bookmark" type="button" data-id="v67" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v91" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty." data-de="Wer unter dem Schirm des Höchsten sitzt und unter dem Schatten des Allmächtigen bleibt.">He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 91:1–2" data-de="Psalm 91,1&ndash;2">Psalm 91:1–2</span>
+          <button class="verse__bookmark" type="button" data-id="v91" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v92" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The Lord is good, a strong hold in the day of trouble; and he knoweth them that trust in him." data-de="Der HERR ist gütig und eine Feste zur Zeit der Not und kennt die, die auf ihn trauen.">The Lord is good, a strong hold in the day of trouble; and he knoweth them that trust in him.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Nahum 1:7" data-de="Nahum 1,7">Nahum 1:7</span>
+          <button class="verse__bookmark" type="button" data-id="v92" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -782,20 +1396,75 @@
     <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
     <h2 class="theme__title" data-en="Perseverance &amp; Endurance" data-de="Ausdauer &amp; Beständigkeit">Perseverance &amp; Endurance</h2>
     <div class="verses">
-      <div class="verse">
+      <div class="verse" data-id="v40">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Blessed is the man who remains steadfast under trial, for when he has stood the test he will receive the crown of life." data-de="Selig ist der Mann, der die Anfechtung erduldet; denn nachdem er bewährt ist, wird er die Krone des Lebens empfangen.">Blessed is the man who remains steadfast under trial, for when he has stood the test he will receive the crown of life.</p>
-        <span class="verse__ref" data-en="James 1:12" data-de="Jakobus 1,12">James 1:12</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="James 1:12" data-de="Jakobus 1,12">James 1:12</span>
+          <button class="verse__bookmark" type="button" data-id="v40" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v41">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Let us not grow weary of doing good, for in due season we will reap, if we do not give up." data-de="Lasset uns aber Gutes tun und nicht müde werden; denn zu seiner Zeit werden wir auch ernten, so wir nicht aufhören.">Let us not grow weary of doing good, for in due season we will reap, if we do not give up.</p>
-        <span class="verse__ref" data-en="Galatians 6:9" data-de="Galater 6,9">Galatians 6:9</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Galatians 6:9" data-de="Galater 6,9">Galatians 6:9</span>
+          <button class="verse__bookmark" type="button" data-id="v41" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v42">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Suffering produces endurance, and endurance produces character, and character produces hope." data-de="Trübsal bringt Geduld, Geduld aber bringt Erfahrung, Erfahrung aber bringt Hoffnung.">Suffering produces endurance, and endurance produces character, and character produces hope.</p>
-        <span class="verse__ref" data-en="Romans 5:3–4" data-de="Römer 5,3&ndash;4">Romans 5:3&ndash;4</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Romans 5:3–4" data-de="Römer 5,3&ndash;4">Romans 5:3&ndash;4</span>
+          <button class="verse__bookmark" type="button" data-id="v42" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v68" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="I have fought the good fight, I have finished the race, I have kept the faith." data-de="Ich habe einen guten Kampf gekämpft, ich habe den Lauf vollendet, ich habe Glauben gehalten.">I have fought the good fight, I have finished the race, I have kept the faith.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="2 Timothy 4:7" data-de="2. Timotheus 4,7">2 Timothy 4:7</span>
+          <button class="verse__bookmark" type="button" data-id="v68" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v89" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Let us run with patience the race that is set before us." data-de="Lasset uns ablegen alle Last und laufen durch Geduld in dem Kampf, der uns verordnet ist.">Let us run with patience the race that is set before us.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Hebrews 12:1" data-de="Hebräer 12,1">Hebrews 12:1</span>
+          <button class="verse__bookmark" type="button" data-id="v89" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v96" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Our light affliction, which is but for a moment, worketh for us a far more exceeding and eternal weight of glory." data-de="Unsre Trübsal, die zeitlich und leicht ist, schafft eine ewige und über alle Maßen wichtige Herrlichkeit.">Our light affliction, which is but for a moment, worketh for us a far more exceeding and eternal weight of glory.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="2 Corinthians 4:16–17" data-de="2. Korinther 4,16&ndash;17">2 Corinthians 4:16–17</span>
+          <button class="verse__bookmark" type="button" data-id="v96" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v102" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="God is faithful, who will not suffer you to be tempted above that ye are able; but will with the temptation also make a way to escape." data-de="Gott aber ist getreu, der euch nicht lässt versuchen über euer Vermögen, sondern macht, dass die Versuchung ein Ende gewinne.">God is faithful, who will not suffer you to be tempted above that ye are able; but will with the temptation also make a way to escape.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="1 Corinthians 10:13" data-de="1. Korinther 10,13">1 Corinthians 10:13</span>
+          <button class="verse__bookmark" type="button" data-id="v102" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -804,20 +1473,55 @@
     <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
     <h2 class="theme__title" data-en="Rest &amp; Restoration" data-de="Ruhe &amp; Wiederherstellung">Rest &amp; Restoration</h2>
     <div class="verses">
-      <div class="verse">
+      <div class="verse" data-id="v43">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="The Lord is my shepherd; I shall not want… he restores my soul." data-de="Der HERR ist mein Hirte; mir wird nichts mangeln. Er erquicket meine Seele.">The Lord is my shepherd; I shall not want&hellip; he restores my soul.</p>
-        <span class="verse__ref" data-en="Psalm 23:1–3" data-de="Psalm 23,1&ndash;3">Psalm 23:1&ndash;3</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 23:1–3" data-de="Psalm 23,1&ndash;3">Psalm 23:1&ndash;3</span>
+          <button class="verse__bookmark" type="button" data-id="v43" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v44">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="The Lord will fight for you, and you have only to be silent." data-de="Der HERR wird für euch streiten, und ihr werdet stille sein.">The Lord will fight for you, and you have only to be silent.</p>
-        <span class="verse__ref" data-en="Exodus 14:14" data-de="2. Mose 14,14">Exodus 14:14</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Exodus 14:14" data-de="2. Mose 14,14">Exodus 14:14</span>
+          <button class="verse__bookmark" type="button" data-id="v44" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v45">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Take my yoke upon you, and learn from me… and you will find rest for your souls." data-de="Nehmet auf euch mein Joch und lernet von mir, so werdet ihr Ruhe finden für eure Seelen.">Take my yoke upon you, and learn from me&hellip; and you will find rest for your souls.</p>
-        <span class="verse__ref" data-en="Matthew 11:29" data-de="Matthäus 11,29">Matthew 11:29</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Matthew 11:29" data-de="Matthäus 11,29">Matthew 11:29</span>
+          <button class="verse__bookmark" type="button" data-id="v45" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v69" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="For God alone my soul waits in silence; from him comes my salvation." data-de="Meine Seele ist stille zu Gott, der mir hilft.">For God alone my soul waits in silence; from him comes my salvation.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 62:1" data-de="Psalm 62,2">Psalm 62:1</span>
+          <button class="verse__bookmark" type="button" data-id="v69" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v98" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="In returning and rest shall ye be saved; in quietness and in confidence shall be your strength." data-de="Durch Umkehr und Stillesein würdet ihr genesen, durch Stillesein und Hoffen würdet ihr stark sein.">In returning and rest shall ye be saved; in quietness and in confidence shall be your strength.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Isaiah 30:15" data-de="Jesaja 30,15">Isaiah 30:15</span>
+          <button class="verse__bookmark" type="button" data-id="v98" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -826,20 +1530,45 @@
     <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
     <h2 class="theme__title" data-en="Forgiveness &amp; Grace" data-de="Vergebung &amp; Gnade">Forgiveness &amp; Grace</h2>
     <div class="verses">
-      <div class="verse">
+      <div class="verse" data-id="v46">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Be kind to one another, tenderhearted, forgiving one another, as God in Christ forgave you." data-de="Seid aber untereinander freundlich, herzlich, und vergebet einer dem andern, gleichwie Gott euch vergeben hat in Christo.">Be kind to one another, tenderhearted, forgiving one another, as God in Christ forgave you.</p>
-        <span class="verse__ref" data-en="Ephesians 4:32" data-de="Epheser 4,32">Ephesians 4:32</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Ephesians 4:32" data-de="Epheser 4,32">Ephesians 4:32</span>
+          <button class="verse__bookmark" type="button" data-id="v46" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v47">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="If we confess our sins, he is faithful and just to forgive us our sins." data-de="So wir aber unsre Sünden bekennen, so ist er treu und gerecht, dass er uns die Sünden vergibt.">If we confess our sins, he is faithful and just to forgive us our sins.</p>
-        <span class="verse__ref" data-en="1 John 1:9" data-de="1. Johannes 1,9">1 John 1:9</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="1 John 1:9" data-de="1. Johannes 1,9">1 John 1:9</span>
+          <button class="verse__bookmark" type="button" data-id="v47" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v48">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="As far as the east is from the west, so far does he remove our transgressions from us." data-de="So fern der Morgen ist vom Abend, lässt er unsre Übertretungen von uns sein.">As far as the east is from the west, so far does he remove our transgressions from us.</p>
-        <span class="verse__ref" data-en="Psalm 103:12" data-de="Psalm 103,12">Psalm 103:12</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 103:12" data-de="Psalm 103,12">Psalm 103:12</span>
+          <button class="verse__bookmark" type="button" data-id="v48" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v70" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="He does not retain his anger forever, because he delights in steadfast love." data-de="Er hält nicht ewig an seinem Zorn fest, denn er hat Gefallen an Gnade.">He does not retain his anger forever, because he delights in steadfast love.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Micah 7:18" data-de="Micha 7,18">Micah 7:18</span>
+          <button class="verse__bookmark" type="button" data-id="v70" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -848,20 +1577,45 @@
     <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
     <h2 class="theme__title" data-en="Purpose &amp; Calling" data-de="Bestimmung &amp; Berufung">Purpose &amp; Calling</h2>
     <div class="verses">
-      <div class="verse">
+      <div class="verse" data-id="v49">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Before I formed you in the womb I knew you." data-de="Ich kannte dich, ehe denn ich dich im Mutterleibe bereitete.">Before I formed you in the womb I knew you.</p>
-        <span class="verse__ref" data-en="Jeremiah 1:5" data-de="Jeremia 1,5">Jeremiah 1:5</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Jeremiah 1:5" data-de="Jeremia 1,5">Jeremiah 1:5</span>
+          <button class="verse__bookmark" type="button" data-id="v49" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v50">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="We are his workmanship, created in Christ Jesus for good works, which God prepared beforehand." data-de="Wir sind sein Werk, geschaffen in Christo Jesu zu guten Werken, zu welchen Gott uns zuvor bereitet hat.">We are his workmanship, created in Christ Jesus for good works, which God prepared beforehand.</p>
-        <span class="verse__ref" data-en="Ephesians 2:10" data-de="Epheser 2,10">Ephesians 2:10</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Ephesians 2:10" data-de="Epheser 2,10">Ephesians 2:10</span>
+          <button class="verse__bookmark" type="button" data-id="v50" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v51">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Who knows whether you have not come to the kingdom for such a time as this?" data-de="Wer weiß, ob du nicht um dieser Zeit willen zum Königreich gekommen bist?">Who knows whether you have not come to the kingdom for such a time as this?</p>
-        <span class="verse__ref" data-en="Esther 4:14" data-de="Esther 4,14">Esther 4:14</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Esther 4:14" data-de="Esther 4,14">Esther 4:14</span>
+          <button class="verse__bookmark" type="button" data-id="v51" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v71" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="That by testing you may discern what is the will of God, what is good and acceptable and perfect." data-de="Auf dass ihr prüfen möget, welches da sei der gute, wohlgefällige und vollkommene Gotteswille.">That by testing you may discern what is the will of God, what is good and acceptable and perfect.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Romans 12:2" data-de="Römer 12,2">Romans 12:2</span>
+          <button class="verse__bookmark" type="button" data-id="v71" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -870,20 +1624,45 @@
     <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
     <h2 class="theme__title" data-en="Gratitude &amp; Joy" data-de="Dankbarkeit &amp; Freude">Gratitude &amp; Joy</h2>
     <div class="verses">
-      <div class="verse">
+      <div class="verse" data-id="v52">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Rejoice always, pray without ceasing, give thanks in all circumstances." data-de="Seid allezeit fröhlich, betet ohne Unterlass, seid dankbar in allen Dingen.">Rejoice always, pray without ceasing, give thanks in all circumstances.</p>
-        <span class="verse__ref" data-en="1 Thessalonians 5:16–18" data-de="1. Thessalonicher 5,16&ndash;18">1 Thessalonians 5:16&ndash;18</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="1 Thessalonians 5:16–18" data-de="1. Thessalonicher 5,16&ndash;18">1 Thessalonians 5:16&ndash;18</span>
+          <button class="verse__bookmark" type="button" data-id="v52" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v53">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="This is the day that the Lord has made; let us rejoice and be glad in it." data-de="Dies ist der Tag, den der HERR macht; lasst uns freuen und fröhlich darinnen sein.">This is the day that the Lord has made; let us rejoice and be glad in it.</p>
-        <span class="verse__ref" data-en="Psalm 118:24" data-de="Psalm 118,24">Psalm 118:24</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 118:24" data-de="Psalm 118,24">Psalm 118:24</span>
+          <button class="verse__bookmark" type="button" data-id="v53" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v54">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="Count it all joy… when you meet trials of various kinds, for the testing of your faith produces steadfastness." data-de="Achtet es für eitel Freude, wenn ihr in mancherlei Anfechtungen fallet, denn euer Glaube, wenn er bewährt ist, wirkt Geduld.">Count it all joy&hellip; when you meet trials of various kinds, for the testing of your faith produces steadfastness.</p>
-        <span class="verse__ref" data-en="James 1:2–3" data-de="Jakobus 1,2&ndash;3">James 1:2&ndash;3</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="James 1:2–3" data-de="Jakobus 1,2&ndash;3">James 1:2&ndash;3</span>
+          <button class="verse__bookmark" type="button" data-id="v54" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v72" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Enter his gates with thanksgiving, and his courts with praise!" data-de="Gehet zu seinen Toren ein mit Danken, zu seinen Vorhöfen mit Loben.">Enter his gates with thanksgiving, and his courts with praise!</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 100:4" data-de="Psalm 100,4">Psalm 100:4</span>
+          <button class="verse__bookmark" type="button" data-id="v72" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -892,20 +1671,45 @@
     <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
     <h2 class="theme__title" data-en="Wisdom &amp; Guidance" data-de="Weisheit &amp; Führung">Wisdom &amp; Guidance</h2>
     <div class="verses">
-      <div class="verse">
+      <div class="verse" data-id="v55">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="If any of you lacks wisdom, let him ask God, who gives generously to all without reproach." data-de="So aber jemand unter euch Weisheit mangelt, der bitte Gott, der da gibt einfältig jedermann und rücket's niemand auf.">If any of you lacks wisdom, let him ask God, who gives generously to all without reproach.</p>
-        <span class="verse__ref" data-en="James 1:5" data-de="Jakobus 1,5">James 1:5</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="James 1:5" data-de="Jakobus 1,5">James 1:5</span>
+          <button class="verse__bookmark" type="button" data-id="v55" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v56">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="I will instruct you and teach you in the way you should go; I will counsel you with my eye upon you." data-de="Ich will dich unterweisen und dir den Weg zeigen, den du wandeln sollst; ich will dich mit meinen Augen leiten.">I will instruct you and teach you in the way you should go; I will counsel you with my eye upon you.</p>
-        <span class="verse__ref" data-en="Psalm 32:8" data-de="Psalm 32,8">Psalm 32:8</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 32:8" data-de="Psalm 32,8">Psalm 32:8</span>
+          <button class="verse__bookmark" type="button" data-id="v56" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v57">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="The heart of man plans his way, but the Lord establishes his steps." data-de="Des Menschen Herz erdenkt sich seinen Weg; aber der HERR allein gibt, dass er fortgehe.">The heart of man plans his way, but the Lord establishes his steps.</p>
-        <span class="verse__ref" data-en="Proverbs 16:9" data-de="Sprüche 16,9">Proverbs 16:9</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Proverbs 16:9" data-de="Sprüche 16,9">Proverbs 16:9</span>
+          <button class="verse__bookmark" type="button" data-id="v57" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v73" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="For the Lord gives wisdom; from his mouth come knowledge and understanding." data-de="Denn der HERR gibt Weisheit, und aus seinem Munde kommt Erkenntnis und Verstand.">For the Lord gives wisdom; from his mouth come knowledge and understanding.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Proverbs 2:6" data-de="Sprüche 2,6">Proverbs 2:6</span>
+          <button class="verse__bookmark" type="button" data-id="v73" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -914,20 +1718,206 @@
     <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
     <h2 class="theme__title" data-en="The Power of God" data-de="Die Kraft Gottes">The Power of God</h2>
     <div class="verses">
-      <div class="verse">
+      <div class="verse" data-id="v58">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="With man this is impossible, but with God all things are possible." data-de="Bei den Menschen ist's unmöglich; aber bei Gott sind alle Dinge möglich.">With man this is impossible, but with God all things are possible.</p>
-        <span class="verse__ref" data-en="Matthew 19:26" data-de="Matthäus 19,26">Matthew 19:26</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Matthew 19:26" data-de="Matthäus 19,26">Matthew 19:26</span>
+          <button class="verse__bookmark" type="button" data-id="v58" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v59">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
-        <p class="verse__text" data-en="He who began a good work in you will carry it on to completion." data-de="Der in euch angefangen hat das gute Werk, der wird's auch vollführen bis an den Tag Jesu Christi.">He who began a good work in you will carry it on to completion.</p>
-        <span class="verse__ref" data-en="Philippians 1:6" data-de="Philipper 1,6">Philippians 1:6</span>
+        <p class="verse__text" data-en="I know that you can do all things, and that no purpose of yours can be thwarted." data-de="Ich erkenne, dass du alles vermagst, und kein Gedanke ist dir verborgen.">I know that you can do all things, and that no purpose of yours can be thwarted.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Job 42:2" data-de="Hiob 42,2">Job 42:2</span>
+          <button class="verse__bookmark" type="button" data-id="v59" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
-      <div class="verse">
+      <div class="verse" data-id="v60">
         <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
         <p class="verse__text" data-en="God, the Lord, is my strength; he makes my feet like the deer's." data-de="Denn der HERR ist meine Kraft, und er wird meine Füße machen wie Hirschfüße.">God, the Lord, is my strength; he makes my feet like the deer&rsquo;s.</p>
-        <span class="verse__ref" data-en="Habakkuk 3:19" data-de="Habakuk 3,19">Habakkuk 3:19</span>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Habakkuk 3:19" data-de="Habakuk 3,19">Habakkuk 3:19</span>
+          <button class="verse__bookmark" type="button" data-id="v60" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v74" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Now to him who is able to do far more abundantly than all that we ask or think." data-de="Dem aber, der überschwenglich tun kann über alles, das wir bitten oder verstehen.">Now to him who is able to do far more abundantly than all that we ask or think.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Ephesians 3:20" data-de="Epheser 3,20">Ephesians 3:20</span>
+          <button class="verse__bookmark" type="button" data-id="v74" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" data-extended-section="true" id="provision-confidence">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Provision &amp; Confidence" data-de="Versorgung &amp; Zuversicht">Provision &amp; Confidence</h2>
+    <div class="verses">
+      <div class="verse" data-id="v75" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="And my God will supply every need of yours according to his riches in glory." data-de="Mein Gott aber fülle alle eure Notdurft nach seinem Reichtum in der Herrlichkeit in Christo Jesu.">And my God will supply every need of yours according to his riches in glory.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Philippians 4:19" data-de="Philipper 4,19">Philippians 4:19</span>
+          <button class="verse__bookmark" type="button" data-id="v75" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v76" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Look at the birds of the air… your heavenly Father feeds them." data-de="Sehet die Vögel unter dem Himmel an. Euer himmlischer Vater nähret sie doch.">Look at the birds of the air&hellip; your heavenly Father feeds them.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Matthew 6:26" data-de="Matthäus 6,26">Matthew 6:26</span>
+          <button class="verse__bookmark" type="button" data-id="v76" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v77" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="For the Lord God is a sun and shield; the Lord bestows favor and honor. No good thing does he withhold." data-de="Denn Gott der HERR ist Sonne und Schild. Er wird kein Gutes mangeln lassen den Frommen.">For the Lord God is a sun and shield; the Lord bestows favor and honor. No good thing does he withhold.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 84:11" data-de="Psalm 84,12">Psalm 84:11</span>
+          <button class="verse__bookmark" type="button" data-id="v77" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v78" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="I will never leave you nor forsake you. So we can confidently say, The Lord is my helper." data-de="Ich will dich nicht verlassen noch versäumen. Der HERR ist mein Helfer, ich will mich nicht fürchten.">I will never leave you nor forsake you. So we can confidently say, The Lord is my helper.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Hebrews 13:5–6" data-de="Hebräer 13,5&ndash;6">Hebrews 13:5&ndash;6</span>
+          <button class="verse__bookmark" type="button" data-id="v78" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v95" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The Lord also will be a refuge for the oppressed, a refuge in times of trouble." data-de="Und der HERR ist des Armen Schutz, ein Schutz in der Not.">The Lord also will be a refuge for the oppressed, a refuge in times of trouble.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 9:9–10" data-de="Psalm 9,10&ndash;11">Psalm 9:9–10</span>
+          <button class="verse__bookmark" type="button" data-id="v95" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" data-extended-section="true" id="guidance-decisions">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Guidance &amp; Decisions" data-de="Führung &amp; Entscheidungen">Guidance &amp; Decisions</h2>
+    <div class="verses">
+      <div class="verse" data-id="v79" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Your word is a lamp to my feet and a light to my path." data-de="Dein Wort ist meines Fußes Leuchte und ein Licht auf meinem Wege.">Your word is a lamp to my feet and a light to my path.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 119:105" data-de="Psalm 119,105">Psalm 119:105</span>
+          <button class="verse__bookmark" type="button" data-id="v79" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v80" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Your ears shall hear a word behind you, saying, This is the way, walk in it." data-de="Deine Ohren werden hören hinter dir her das Wort sagen: Dies ist der Weg, den gehet.">Your ears shall hear a word behind you, saying, This is the way, walk in it.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Isaiah 30:21" data-de="Jesaja 30,21">Isaiah 30:21</span>
+          <button class="verse__bookmark" type="button" data-id="v80" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v81" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Let your good Spirit lead me on level ground." data-de="Dein guter Geist führe mich auf ebener Bahn.">Let your good Spirit lead me on level ground.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 143:10" data-de="Psalm 143,10">Psalm 143:10</span>
+          <button class="verse__bookmark" type="button" data-id="v81" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v82" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Let the peace of Christ rule in your hearts… And be thankful." data-de="Und der Friede Gottes regiere in euren Herzen. Und seid dankbar.">Let the peace of Christ rule in your hearts&hellip; And be thankful.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Colossians 3:15" data-de="Kolosser 3,15">Colossians 3:15</span>
+          <button class="verse__bookmark" type="button" data-id="v82" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v103" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="If I take the wings of the morning… even there shall thy hand lead me, and thy right hand shall hold me." data-de="Nähme ich Flügel der Morgenröte, so würde mich doch deine Hand daselbst führen und deine Rechte mich halten.">If I take the wings of the morning… even there shall thy hand lead me, and thy right hand shall hold me.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 139:9–10" data-de="Psalm 139,9&ndash;10">Psalm 139:9–10</span>
+          <button class="verse__bookmark" type="button" data-id="v103" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="theme" data-extended-section="true" id="praise-worship">
+    <div class="theme__divider" aria-hidden="true"><span class="theme__glyph"></span></div>
+    <h2 class="theme__title" data-en="Praise &amp; Worship" data-de="Lob &amp; Anbetung">Praise &amp; Worship</h2>
+    <div class="verses">
+      <div class="verse" data-id="v83" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Let everything that has breath praise the Lord!" data-de="Alles, was Odem hat, lobe den HERRN!">Let everything that has breath praise the Lord!</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 150:6" data-de="Psalm 150,6">Psalm 150:6</span>
+          <button class="verse__bookmark" type="button" data-id="v83" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v84" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="I will bless the Lord at all times; his praise shall continually be in my mouth." data-de="Ich will den HERRN loben allezeit; sein Lob soll immerdar in meinem Munde sein.">I will bless the Lord at all times; his praise shall continually be in my mouth.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 34:1" data-de="Psalm 34,2">Psalm 34:1</span>
+          <button class="verse__bookmark" type="button" data-id="v84" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v85" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Oh come, let us sing to the Lord; let us make a joyful noise to the rock of our salvation!" data-de="Kommt herzu, lasst uns dem HERRN frohlocken und jauchzen dem Hort unsers Heils!">Oh come, let us sing to the Lord; let us make a joyful noise to the rock of our salvation!</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 95:1" data-de="Psalm 95,1">Psalm 95:1</span>
+          <button class="verse__bookmark" type="button" data-id="v85" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v86" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Worthy are you, our Lord and God, to receive glory and honor and power." data-de="Herr, du bist würdig zu nehmen Preis und Ehre und Kraft.">Worthy are you, our Lord and God, to receive glory and honor and power.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Revelation 4:11" data-de="Offenbarung 4,11">Revelation 4:11</span>
+          <button class="verse__bookmark" type="button" data-id="v86" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -953,7 +1943,21 @@
     <span id="overlayRef"></span>
     <div class="overlay__actions">
       <button class="overlay__again" type="button" id="overlayAgain" data-en="Draw another" data-de="Noch einen ziehen">Draw another</button>
+      <button class="overlay__bookmark" type="button" id="overlayBookmark" aria-label="Bookmark this verse">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+      </button>
     </div>
+  </div>
+</div>
+
+<div class="panel" id="bookmarksPanel" role="dialog" aria-modal="true" aria-label="Bookmarked verses">
+  <div class="panel__card">
+    <div class="panel__head">
+      <h3 class="panel__title" data-en="Your bookmarks" data-de="Deine Lesezeichen">Your bookmarks</h3>
+      <button class="panel__close" id="panelClose" type="button" aria-label="Close">&times;</button>
+    </div>
+    <p class="panel__empty" id="panelEmpty" data-en="No verses saved yet. Tap the bookmark icon on any verse to keep it here." data-de="Noch keine Verse gespeichert. Tippe auf das Lesezeichen-Symbol bei einem Vers, um ihn hier zu sammeln.">No verses saved yet. Tap the bookmark icon on any verse to keep it here.</p>
+    <div class="panel__list" id="panelList"></div>
   </div>
 </div>
 
@@ -962,6 +1966,8 @@
     var root = document.documentElement;
     var STORAGE_LANG = 'bible-page-lang';
     var STORAGE_THEME = 'bible-page-theme';
+    var STORAGE_EXTENDED = 'bible-page-extended';
+    var STORAGE_BOOKMARKS = 'bible-page-bookmarks';
 
     /* ---------- Language ---------- */
 
@@ -1042,19 +2048,143 @@
     window.addEventListener('scroll', updateTocVisibility, { passive: true });
     updateTocVisibility();
 
+    /* ---------- Display more quotes ---------- */
+
+    var extendedSwitch = document.getElementById('extendedSwitch');
+    var storedExtended = safeGet(STORAGE_EXTENDED) === 'true';
+
+    function applyExtended(on) {
+      document.body.classList.toggle('show-extended', on);
+      extendedSwitch.classList.toggle('is-on', on);
+      extendedSwitch.setAttribute('aria-checked', on ? 'true' : 'false');
+    }
+
+    applyExtended(storedExtended);
+
+    extendedSwitch.addEventListener('click', function () {
+      var on = !document.body.classList.contains('show-extended');
+      applyExtended(on);
+      safeSet(STORAGE_EXTENDED, on ? 'true' : 'false');
+    });
+
+    /* ---------- Bookmarks ---------- */
+
+    function getBookmarks() {
+      try { return JSON.parse(safeGet(STORAGE_BOOKMARKS) || '[]'); } catch (e) { return []; }
+    }
+    function saveBookmarks(list) {
+      safeSet(STORAGE_BOOKMARKS, JSON.stringify(list));
+    }
+
+    function isBookmarked(id) {
+      return getBookmarks().indexOf(id) !== -1;
+    }
+
+    function updateBookmarkIcons(id) {
+      var on = isBookmarked(id);
+      document.querySelectorAll('.verse__bookmark[data-id="' + id + '"]').forEach(function (btn) {
+        btn.classList.toggle('is-bookmarked', on);
+      });
+      if (overlayBookmark && overlayBookmark.dataset.id === id) {
+        overlayBookmark.classList.toggle('is-bookmarked', on);
+      }
+    }
+
+    function toggleBookmark(id) {
+      var list = getBookmarks();
+      var idx = list.indexOf(id);
+      if (idx === -1) { list.push(id); } else { list.splice(idx, 1); }
+      saveBookmarks(list);
+      updateBookmarkIcons(id);
+      if (bookmarksPanel.classList.contains('is-open')) renderBookmarksPanel();
+    }
+
+    document.querySelectorAll('.verse__bookmark').forEach(function (btn) {
+      btn.addEventListener('click', function () { toggleBookmark(btn.dataset.id); });
+      if (isBookmarked(btn.dataset.id)) btn.classList.add('is-bookmarked');
+    });
+
+    var bookmarksIcon = document.getElementById('bookmarksIcon');
+    var bookmarksPanel = document.getElementById('bookmarksPanel');
+    var panelClose = document.getElementById('panelClose');
+    var panelList = document.getElementById('panelList');
+    var panelEmpty = document.getElementById('panelEmpty');
+
+    function renderBookmarksPanel() {
+      var ids = getBookmarks();
+      panelList.innerHTML = '';
+      panelEmpty.style.display = ids.length ? 'none' : 'block';
+      ids.forEach(function (id) {
+        var source = document.querySelector('.verse[data-id="' + id + '"]');
+        var text, ref;
+        if (source) {
+          text = source.querySelector('.verse__text').textContent.trim();
+          ref = source.querySelector('.verse__ref').textContent.trim();
+        } else {
+          text = '\u2014';
+          ref = id;
+        }
+        var item = document.createElement('div');
+        item.className = 'panel__item';
+        var p = document.createElement('p');
+        p.className = 'panel__item-text';
+        p.textContent = '\u201C' + text + '\u201D';
+        var foot = document.createElement('div');
+        foot.className = 'panel__item-foot';
+        var refEl = document.createElement('span');
+        refEl.className = 'panel__item-ref';
+        refEl.textContent = ref;
+        var removeBtn = document.createElement('button');
+        removeBtn.className = 'panel__item-remove';
+        removeBtn.type = 'button';
+        removeBtn.textContent = currentLang === 'de' ? 'Entfernen' : 'Remove';
+        removeBtn.addEventListener('click', function () { toggleBookmark(id); });
+        foot.appendChild(refEl);
+        foot.appendChild(removeBtn);
+        item.appendChild(p);
+        item.appendChild(foot);
+        panelList.appendChild(item);
+      });
+    }
+
+    function openBookmarksPanel() {
+      renderBookmarksPanel();
+      bookmarksPanel.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      panelClose.focus();
+    }
+    function closeBookmarksPanel() {
+      bookmarksPanel.classList.remove('is-open');
+      document.body.style.overflow = '';
+      bookmarksIcon.focus();
+    }
+
+    bookmarksIcon.addEventListener('click', openBookmarksPanel);
+    panelClose.addEventListener('click', closeBookmarksPanel);
+    bookmarksPanel.addEventListener('click', function (e) { if (e.target === bookmarksPanel) closeBookmarksPanel(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && bookmarksPanel.classList.contains('is-open')) closeBookmarksPanel();
+    });
+
     /* ---------- Random verse ---------- */
 
     var overlay = document.getElementById('overlay');
     var overlayText = document.getElementById('overlayText');
     var overlayRef = document.getElementById('overlayRef');
+    var overlayBookmark = document.getElementById('overlayBookmark');
     var randomBtn = document.getElementById('randomBtn');
     var overlayClose = document.getElementById('overlayClose');
     var overlayAgain = document.getElementById('overlayAgain');
     var lastIndex = -1;
 
     function getVerses() {
-      return Array.prototype.map.call(document.querySelectorAll('.verse'), function (v) {
+      var showExt = document.body.classList.contains('show-extended');
+      var nodes = Array.prototype.filter.call(document.querySelectorAll('.verse'), function (v) {
+        return showExt || v.getAttribute('data-extended') !== 'true';
+      });
+      return nodes.map(function (v) {
         return {
+          id: v.getAttribute('data-id'),
           text: v.querySelector('.verse__text').textContent.trim(),
           ref: v.querySelector('.verse__ref').textContent.trim()
         };
@@ -1073,6 +2203,8 @@
       setTimeout(function () {
         overlayText.textContent = '\u201C' + v.text + '\u201D';
         overlayRef.textContent = v.ref;
+        overlayBookmark.dataset.id = v.id;
+        overlayBookmark.classList.toggle('is-bookmarked', isBookmarked(v.id));
         requestAnimationFrame(function () {
           overlayText.classList.add('is-visible');
           overlayRef.classList.add('is-visible');
@@ -1096,6 +2228,9 @@
     randomBtn.addEventListener('click', openOverlay);
     overlayClose.addEventListener('click', closeOverlay);
     overlayAgain.addEventListener('click', showRandomVerse);
+    overlayBookmark.addEventListener('click', function () {
+      if (overlayBookmark.dataset.id) toggleBookmark(overlayBookmark.dataset.id);
+    });
     overlay.addEventListener('click', function (e) { if (e.target === overlay) closeOverlay(); });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeOverlay();
