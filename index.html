@@ -16,54 +16,75 @@
 <meta name="apple-mobile-web-app-title" content="Comfort &amp; Strength">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,440;0,9..144,560;1,9..144,440&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Vollkorn:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f6f1e7;
-    --bg-soft: #efe7d6;
-    --ink: #2c2620;
-    --ink-soft: #5c5347;
-    --ink-faint: #8a7f6e;
-    --accent: #8a3324;
-    --accent-soft: #b5624e;
-    --gold: #a9852f;
-    --rule: #d8ccb2;
-    --shadow: rgba(44, 38, 32, 0.10);
-    --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-    --font-body: "Crimson Pro", Georgia, "Times New Roman", serif;
+    --bg: #efe4cc;
+    --bg-soft: #e6d7b8;
+    --ink: #241b10;
+    --ink-soft: #4d3d29;
+    --ink-faint: #5f4a30;
+    --accent: #7a2a1e;
+    --accent-soft: #a84f39;
+    --gold: #6b4f18;
+    --verdigris: #3f5747;
+    --rule: #cbb383;
+    --shadow: rgba(36, 27, 16, 0.14);
+    --font-display: "Petrona", Georgia, "Times New Roman", serif;
+    --font-body: "Vollkorn", Georgia, "Times New Roman", serif;
   }
 
   :root:not([data-theme="light"]) {
     @media (prefers-color-scheme: dark) {
-      --bg: #171310;
-      --bg-soft: #1f1a15;
-      --ink: #ece4d4;
-      --ink-soft: #c9bda6;
-      --ink-faint: #8f8271;
-      --accent: #d9846c;
-      --accent-soft: #c96a52;
-      --gold: #c9a24a;
+      --bg: #14110c;
+      --bg-soft: #1c1712;
+      --ink: #ece1c8;
+      --ink-soft: #cbb98f;
+      --ink-faint: #a89878;
+      --accent: #e0967a;
+      --accent-soft: #c96a4e;
+      --gold: #d1a94f;
+      --verdigris: #8fae9c;
       --rule: #3a3226;
-      --shadow: rgba(0, 0, 0, 0.35);
+      --shadow: rgba(0, 0, 0, 0.4);
     }
   }
 
   :root[data-theme="dark"] {
-    --bg: #171310;
-    --bg-soft: #1f1a15;
-    --ink: #ece4d4;
-    --ink-soft: #c9bda6;
-    --ink-faint: #8f8271;
-    --accent: #d9846c;
-    --accent-soft: #c96a52;
-    --gold: #c9a24a;
+    --bg: #14110c;
+    --bg-soft: #1c1712;
+    --ink: #ece1c8;
+    --ink-soft: #cbb98f;
+    --ink-faint: #a89878;
+    --accent: #e0967a;
+    --accent-soft: #c96a4e;
+    --gold: #d1a94f;
+    --verdigris: #8fae9c;
     --rule: #3a3226;
-    --shadow: rgba(0, 0, 0, 0.35);
+    --shadow: rgba(0, 0, 0, 0.4);
   }
 
   * { box-sizing: border-box; }
 
   html { background: var(--bg); scroll-behavior: smooth; }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      body::before { opacity: 0.08; mix-blend-mode: overlay; }
+    }
+  }
+  :root[data-theme="dark"] body::before { opacity: 0.08; mix-blend-mode: overlay; }
 
   body {
     margin: 0;
@@ -423,7 +444,7 @@
     box-shadow: 0 1px 3px var(--shadow);
     transition: transform 0.25s ease;
   }
-  .switch.is-on { background: var(--accent); }
+  .switch.is-on { background: var(--verdigris); }
   .switch.is-on::after { transform: translateX(18px); }
 
   /* ---------- Bookmarks icon + panel ---------- */
