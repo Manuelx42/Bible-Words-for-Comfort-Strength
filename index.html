@@ -476,108 +476,178 @@
     inset: 0;
     z-index: 300;
     display: flex;
-    align-items: flex-start;
     justify-content: center;
-    padding: 4rem 1.5rem;
-    background: color-mix(in srgb, var(--ink) 45%, transparent);
+    background: var(--bg);
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.35s ease;
+    transition: opacity 0.5s ease;
     overflow-y: auto;
   }
   .panel.is-open { opacity: 1; visibility: visible; }
 
+  .panel::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 45% at 50% 8%, var(--bg-soft) 0%, transparent 72%);
+    pointer-events: none;
+  }
+
   .panel__card {
-    background: var(--bg);
-    border: 1px solid var(--rule);
-    border-radius: 20px;
-    max-width: 620px;
+    position: relative;
+    max-width: 640px;
     width: 100%;
-    padding: 2.4rem 2rem 2.2rem;
-    box-shadow: 0 24px 60px -20px var(--shadow);
+    padding: 5.5rem 1.5rem 5rem;
   }
 
   .panel__head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.8rem;
+    text-align: center;
+    margin-bottom: 3.2rem;
   }
+
+  .panel__mark {
+    width: 26px;
+    height: 26px;
+    margin: 0 auto 1.6rem;
+    opacity: 0.75;
+  }
+  .panel__mark svg { width: 100%; height: 100%; display: block; }
+  .panel__mark path, .panel__mark line { stroke: var(--gold); }
 
   .panel__title {
     font-family: var(--font-display);
-    font-size: 1.4rem;
+    font-size: clamp(1.5rem, 3vw, 1.9rem);
     font-weight: 500;
     color: var(--ink);
     margin: 0;
   }
 
   .panel__close {
-    width: 34px;
-    height: 34px;
+    position: absolute;
+    top: 1.8rem;
+    right: 1.8rem;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     border: 1px solid var(--rule);
     background: transparent;
     color: var(--ink-faint);
-    font-size: 1.2rem;
+    font-family: var(--font-body);
+    font-size: 1.3rem;
+    line-height: 1;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: border-color 0.25s ease, color 0.25s ease;
   }
-  .panel__close:hover { color: var(--accent); border-color: var(--accent-soft); }
+  .panel__close:hover, .panel__close:focus-visible { border-color: var(--accent-soft); color: var(--accent); }
 
   .panel__empty {
-    font-family: var(--font-body);
+    font-family: var(--font-display);
     font-style: italic;
+    font-size: 1.1rem;
     color: var(--ink-faint);
     text-align: center;
     padding: 2rem 0;
+    max-width: 40ch;
+    margin: 0 auto;
   }
 
-  .panel__list { display: flex; flex-direction: column; gap: 1.6rem; }
-
-  .panel__item {
-    padding-bottom: 1.6rem;
-    border-bottom: 1px solid var(--rule);
+  .panel__copy-row {
+    display: flex;
+    justify-content: center;
+    margin: -1.4rem 0 2.6rem;
   }
-  .panel__item:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .panel__copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.86rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--rule);
+    padding: 0.6rem 1.3rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+  }
+  .panel__copy:hover, .panel__copy:focus-visible { border-color: var(--accent-soft); color: var(--accent); background: var(--bg-soft); }
+  .panel__copy svg { width: 14px; height: 14px; }
+  .panel__copy svg path, .panel__copy svg rect { stroke: currentColor; }
+  .panel__copy.is-copied { color: var(--verdigris); border-color: var(--verdigris); }
+
+  .panel__list { display: flex; flex-direction: column; gap: 3.4rem; }
+
+  .panel__item { position: relative; padding-left: 2.1rem; }
+
+  .panel__item-quote {
+    position: absolute;
+    left: -0.15rem;
+    top: -0.6rem;
+    font-family: var(--font-display);
+    font-size: 3.1rem;
+    line-height: 1;
+    color: var(--gold);
+    opacity: 0.55;
+    font-weight: 400;
+    user-select: none;
+    pointer-events: none;
+  }
 
   .panel__item-text {
     font-family: var(--font-display);
     font-style: italic;
-    font-size: 1.08rem;
+    font-weight: 400;
+    font-size: clamp(1.15rem, 2vw, 1.32rem);
     line-height: 1.5;
     color: var(--ink);
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.7rem;
+    max-width: 60ch;
   }
 
   .panel__item-foot {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
+    max-width: 60ch;
   }
 
   .panel__item-ref {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
     font-family: var(--font-body);
     font-weight: 600;
-    font-size: 0.78rem;
+    font-size: 0.86rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--accent);
   }
+  .panel__item-ref::before { content: ""; display: inline-block; width: 14px; height: 1px; background: var(--accent-soft); opacity: 0.7; }
 
   .panel__item-remove {
-    font-family: var(--font-body);
-    font-size: 0.8rem;
-    color: var(--ink-faint);
-    background: transparent;
+    flex: none;
+    width: 34px;
+    height: 34px;
     border: none;
+    background: transparent;
+    color: var(--gold);
     cursor: pointer;
-    text-decoration: underline;
-    text-underline-offset: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: color 0.25s ease, background-color 0.25s ease;
   }
-  .panel__item-remove:hover { color: var(--accent); }
+  .panel__item-remove svg { width: 17px; height: 17px; }
+  .panel__item-remove svg path { stroke: currentColor; fill: var(--gold); }
+  .panel__item-remove:hover { color: var(--accent); background: var(--bg-soft); }
+  .panel__item-remove:hover svg path { fill: var(--accent); }
 
   .top-link {
     display: block;
@@ -1005,6 +1075,16 @@
           </button>
         </div>
       </div>
+      <div class="verse" data-id="v109" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="Be strong and take heart, all you who hope in the Lord." data-de="Seid getrost und unverzagt, alle, die ihr des HERRN harret.">Be strong and take heart, all you who hope in the Lord.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 31:24" data-de="Psalm 31,25">Psalm 31:24</span>
+          <button class="verse__bookmark" type="button" data-id="v109" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1108,6 +1188,16 @@
         <div class="verse__foot">
           <span class="verse__ref" data-en="Psalm 42:11" data-de="Psalm 42,12">Psalm 42:11</span>
           <button class="verse__bookmark" type="button" data-id="v101" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v107" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="This is my comfort in my affliction, that your promise gives me life." data-de="Das ist mein Trost in meinem Elend; denn dein Wort erquickt mich.">This is my comfort in my affliction, that your promise gives me life.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 119:50" data-de="Psalm 119,50">Psalm 119:50</span>
+          <button class="verse__bookmark" type="button" data-id="v107" aria-label="Bookmark this verse">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
           </button>
         </div>
@@ -1420,6 +1510,16 @@
           </button>
         </div>
       </div>
+      <div class="verse" data-id="v108" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="The Lord is my rock, my fortress and my deliverer; my shield and the horn of my salvation." data-de="Der HERR ist mein Fels, meine Burg, mein Erretter, mein Schild und Horn meines Heils.">The Lord is my rock, my fortress and my deliverer; my shield and the horn of my salvation.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 18:2" data-de="Psalm 18,3">Psalm 18:2</span>
+          <button class="verse__bookmark" type="button" data-id="v108" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1550,6 +1650,26 @@
         <div class="verse__foot">
           <span class="verse__ref" data-en="Isaiah 30:15" data-de="Jesaja 30,15">Isaiah 30:15</span>
           <button class="verse__bookmark" type="button" data-id="v98" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v105" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="I will both lie down in peace, and sleep: for you alone, Lord, make me dwell in safety." data-de="Ich liege und schlafe ganz mit Frieden; denn allein du, HERR, hilfst mir, dass ich sicher wohne.">I will both lie down in peace, and sleep: for you alone, Lord, make me dwell in safety.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Psalm 4:8" data-de="Psalm 4,9">Psalm 4:8</span>
+          <button class="verse__bookmark" type="button" data-id="v105" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v106" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="When you lie down, you will not be afraid; when you lie down, your sleep will be sweet." data-de="Legst du dich, so wirst du dich nicht fürchten, sondern liegen und sanft schlafen.">When you lie down, you will not be afraid; when you lie down, your sleep will be sweet.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="Proverbs 3:24" data-de="Sprüche 3,24">Proverbs 3:24</span>
+          <button class="verse__bookmark" type="button" data-id="v106" aria-label="Bookmark this verse">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
           </button>
         </div>
@@ -1785,6 +1905,16 @@
         <div class="verse__foot">
           <span class="verse__ref" data-en="Ephesians 3:20" data-de="Epheser 3,20">Ephesians 3:20</span>
           <button class="verse__bookmark" type="button" data-id="v74" aria-label="Bookmark this verse">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="verse" data-id="v104" data-extended="true">
+        <span class="verse__quote-mark" aria-hidden="true">&ldquo;</span>
+        <p class="verse__text" data-en="In this world you will have trouble. But take heart! I have overcome the world." data-de="In dieser Welt habt ihr Angst; aber seid getrost, ich habe die Welt überwunden.">In this world you will have trouble. But take heart! I have overcome the world.</p>
+        <div class="verse__foot">
+          <span class="verse__ref" data-en="John 16:33" data-de="Johannes 16,33">John 16:33</span>
+          <button class="verse__bookmark" type="button" data-id="v104" aria-label="Bookmark this verse">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>
           </button>
         </div>
