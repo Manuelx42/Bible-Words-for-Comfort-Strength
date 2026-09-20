@@ -1982,10 +1982,22 @@
 </div>
 
 <div class="panel" id="bookmarksPanel" role="dialog" aria-modal="true" aria-label="Bookmarked verses">
+  <button class="panel__close" id="panelClose" type="button" aria-label="Close">&times;</button>
   <div class="panel__card">
     <div class="panel__head">
+      <div class="panel__mark" aria-hidden="true">
+        <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="13" y1="1" x2="13" y2="25" stroke-width="1.2"/>
+          <line x1="2" y1="8" x2="24" y2="8" stroke-width="1.2"/>
+        </svg>
+      </div>
       <h3 class="panel__title" data-en="Your bookmarks" data-de="Deine Lesezeichen">Your bookmarks</h3>
-      <button class="panel__close" id="panelClose" type="button" aria-label="Close">&times;</button>
+    </div>
+    <div class="panel__copy-row" id="panelCopyRow">
+      <button class="panel__copy" id="panelCopyAll" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>
+        <span data-en="Copy all" data-de="Alle kopieren">Copy all</span>
+      </button>
     </div>
     <p class="panel__empty" id="panelEmpty" data-en="No verses saved yet. Tap the bookmark icon on any verse to keep it here." data-de="Noch keine Verse gespeichert. Tippe auf das Lesezeichen-Symbol bei einem Vers, um ihn hier zu sammeln.">No verses saved yet. Tap the bookmark icon on any verse to keep it here.</p>
     <div class="panel__list" id="panelList"></div>
@@ -2140,11 +2152,14 @@
     var panelClose = document.getElementById('panelClose');
     var panelList = document.getElementById('panelList');
     var panelEmpty = document.getElementById('panelEmpty');
+    var panelCopyRow = document.getElementById('panelCopyRow');
+    var panelCopyAll = document.getElementById('panelCopyAll');
 
     function renderBookmarksPanel() {
       var ids = getBookmarks();
       panelList.innerHTML = '';
       panelEmpty.style.display = ids.length ? 'none' : 'block';
+      panelCopyRow.style.display = ids.length ? 'flex' : 'none';
       ids.forEach(function (id) {
         var source = document.querySelector('.verse[data-id="' + id + '"]');
         var text, ref;
@@ -2157,26 +2172,88 @@
         }
         var item = document.createElement('div');
         item.className = 'panel__item';
+
+        var quote = document.createElement('span');
+        quote.className = 'panel__item-quote';
+        quote.setAttribute('aria-hidden', 'true');
+        quote.textContent = '\u201C';
+
         var p = document.createElement('p');
         p.className = 'panel__item-text';
         p.textContent = '\u201C' + text + '\u201D';
+
         var foot = document.createElement('div');
         foot.className = 'panel__item-foot';
+
         var refEl = document.createElement('span');
         refEl.className = 'panel__item-ref';
         refEl.textContent = ref;
+
         var removeBtn = document.createElement('button');
         removeBtn.className = 'panel__item-remove';
         removeBtn.type = 'button';
-        removeBtn.textContent = currentLang === 'de' ? 'Entfernen' : 'Remove';
+        removeBtn.setAttribute('aria-label', currentLang === 'de' ? 'Lesezeichen entfernen' : 'Remove bookmark');
+        removeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.2L5 21V4.5a1 1 0 0 1 1-1z"/></svg>';
         removeBtn.addEventListener('click', function () { toggleBookmark(id); });
+
         foot.appendChild(refEl);
         foot.appendChild(removeBtn);
+        item.appendChild(quote);
         item.appendChild(p);
         item.appendChild(foot);
         panelList.appendChild(item);
       });
     }
+
+    function copyAllBookmarks() {
+      var ids = getBookmarks();
+      if (!ids.length) return;
+      var lines = ids.map(function (id) {
+        var source = document.querySelector('.verse[data-id="' + id + '"]');
+        var text = source ? source.querySelector('.verse__text').textContent.trim() : '\u2014';
+        var ref = source ? source.querySelector('.verse__ref').textContent.trim() : id;
+        return '\u201C' + text + '\u201D \u2014 ' + ref;
+      });
+      var joined = lines.join('\n\n');
+
+      function showCopied() {
+        panelCopyAll.classList.add('is-copied');
+        var span = panelCopyAll.querySelector('span');
+        var original = span.textContent;
+        span.textContent = currentLang === 'de' ? 'Kopiert!' : 'Copied!';
+        setTimeout(function () {
+          panelCopyAll.classList.remove('is-copied');
+          span.textContent = original;
+        }, 1800);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(joined).then(showCopied).catch(function () {
+          fallbackCopy(joined, showCopied);
+        });
+      } else {
+        fallbackCopy(joined, showCopied);
+      }
+    }
+
+    function fallbackCopy(text, onDone) {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        onDone();
+      } catch (e) {
+        console.warn('Copy failed:', e);
+      }
+    }
+
+    panelCopyAll.addEventListener('click', copyAllBookmarks);
 
     function openBookmarksPanel() {
       renderBookmarksPanel();
