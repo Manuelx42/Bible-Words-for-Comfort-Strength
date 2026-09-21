@@ -19,3 +19,13 @@ Anyone who wants a small, always-available collection of comforting scripture to
 ## What it's built with
 
 A single self-contained HTML file (markup, styles, and logic together), a web app manifest, and a service worker for offline caching. No backend, no account, no tracking. Everything you bookmark or choose stays in your browser's local storage on your own device.
+
+## Possible future features
+
+Ideas under consideration for later versions:
+
+* **Bible Reading Plan** — a calendar icon next to the bookmark icon opens a plan that surfaces one verse a day, each with a short introductory sentence for context.
+* **Vote for new verses** — a way for readers to suggest and upvote verses they'd like to see added to the collection.
+* **Add your own verses** — a way for readers to add personal verses to their own copy of the app.
+
+None of these are built yet. They would need a small backend (or a shared data store) for voting and submissions, since the app currently runs entirely client-side with no server component.
