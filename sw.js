@@ -2,7 +2,7 @@
 // Cache-first strategy for the app shell so verses and bookmarks are
 // available fully offline, even on a first visit after install.
 
-const CACHE_NAME = "comfort-strength-v7";
+const CACHE_NAME = "comfort-strength-v9";
 
 const APP_SHELL = [
   "./",
